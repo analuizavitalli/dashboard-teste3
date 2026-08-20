@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continente — Relatório Integrado Semanal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:#1A202C;}
+.tab-btn.active{background:#E30613;color:#fff;box-shadow:0 3px 10px rgba(227,6,19,.25);}
+@media print{.no-print{display:none!important;}.view{display:block!important;}body{background:#fff!important;font-size:11px;}.card{box-shadow:none!important;border:1px solid #E2E8F0;}.pab{page-break-inside:avoid;break-inside:avoid;}h3,h4{page-break-after:avoid;}}
+.scroll-thin::-webkit-scrollbar{height:6px;}.scroll-thin::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:3px;}
+/* Tooltip */
+.tt-wrap{position:relative;display:inline-flex;align-items:center;}
+.tt-wrap .tt-body{visibility:hidden;background:#1A202C;color:#F8FAFC;text-align:left;border-radius:8px;padding:8px 11px;position:absolute;z-index:60;bottom:130%;left:50%;transform:translateX(-50%);width:260px;font-size:10px;line-height:1.5;white-space:normal;box-shadow:0 4px 16px rgba(0,0,0,.3);pointer-events:none;}
+.tt-wrap:hover .tt-body{visibility:visible;}
+.tt-icon{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;background:#718096;color:#fff;border-radius:50%;font-size:9px;font-weight:700;cursor:help;margin-left:4px;flex-shrink:0;}
+/* Section dividers */
+.sec-divider{display:flex;align-items:center;gap:8px;margin:18px 0 10px;}
+.sec-divider span{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;padding:4px 12px;border-radius:20px;}
+.sec-divider::before,.sec-divider::after{content:'';flex:1;height:1px;background:#E2E8F0;}
+.sec-divider.general span{background:#EBF8FF;color:#2B6CB0;}
+.sec-divider.comparable span{background:#FEF9C3;color:#92400E;}
+/* Sentiment bar */
+.sent-bar{height:8px;border-radius:4px;overflow:hidden;display:flex;gap:1px;}
+.sent-bar .s-pos{background:#38A169;} .sent-bar .s-neu{background:#D69E2E;} .sent-bar .s-neg{background:#E53E3E;}
+/* Wine accent for bold highlights */
+.wine{color:#7B1C3A!important;} .wine-bg{background:#F9F0F3;border-color:#D4A0B0;}
+/* Links */
+a.ext-link{color:#2B6CB0;text-decoration:none;font-size:11px;font-weight:500;}
+a.ext-link:hover{text-decoration:underline;}
+/* Cards baseline */
+.card{background:#fff;border-radius:12px;border:1px solid #E2E8F0;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+</style>
+</head>
+<body class="bg-[#F7F8FA] text-[13px] leading-normal">
+
+<!-- LOGIN -->
+<div id="loginScreen" style="position:fixed;inset:0;z-index:9999;background:#F7F8FA;display:flex;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:18px;box-shadow:0 8px 48px rgba(0,0,0,0.13);padding:44px 38px;max-width:370px;width:92%;text-align:center;">
+    <!-- Continente real logo (login) -->
+    <div style="margin:0 auto 20px;display:flex;align-items:center;justify-content:center;"><svg clip-rule="evenodd" fill-rule="evenodd" height="48" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" viewBox="696 3245 28308 14510" width="180" xmlns="http://www.w3.org/2000/svg"><g fill="#e31e24"><path d="m14783 3245c2144 0 3882 1738 3882 3882s-1738 3882-3882 3882-3882-1738-3882-3882 1738-3882 3882-3882zm0 783c1712 0 3100 1387 3100 3099s-1388 3100-3100 3100-3100-1388-3100-3100 1388-3099 3100-3099zm815 3868c221-235 591-246 827-25 235 222 246 592 25 827-215 229-475 410-762 534-288 125-598 191-911 191-634 0-1208-257-1623-672-415-416-672-990-672-1624s257-1208 672-1623 989-672 1623-672c296 0 590 59 867 172 275 113 527 277 741 486 230 227 233 597 6 827-226 230-596 233-826 7-107-104-229-185-361-239-130-53-275-81-427-81-310 0-591 126-794 329s-329 484-329 794c0 311 126 591 329 795 203 203 484 328 794 328 160 0 312-31 448-90 138-59 265-149 373-264zm-815-1200c238 0 431 193 431 431s-193 432-431 432-431-194-431-432 193-431 431-431z"/><path d="m2803 16705c175-156 444-140 600 35 155 175 140 443-35 599-147 131-316 232-496 301-182 69-375 106-571 106-444 0-845-180-1135-470-291-291-470-692-470-1135s179-845 470-1135c290-291 691-470 1135-470 198 0 394 38 580 110 183 71 354 177 502 313 173 157 185 425 27 597-158 173-425 184-598 27-69-64-149-113-237-147-84-33-177-50-274-50-209 0-398 84-534 221-137 136-221 325-221 534 0 208 84 397 221 534 136 136 325 221 534 221 93 0 184-17 268-49 86-33 165-81 234-142zm2649-2169c443 0 845 179 1135 470 291 290 470 692 470 1135s-179 844-470 1135c-290 290-692 470-1135 470s-844-180-1135-470c-290-291-470-692-470-1135s180-845 470-1135c291-291 692-470 1135-470zm534 1071c-136-137-325-221-534-221-208 0-397 84-534 221-136 136-221 325-221 534 0 208 85 397 221 534 137 136 326 221 534 221 209 0 398-85 534-221 137-137 221-326 221-534 0-209-84-398-221-534zm1389 409v-73c0-28 3-55 8-82 36-347 192-658 425-892 268-268 638-433 1046-433s778 165 1046 433c267 268 433 637 433 1045v1316c0 234-191 425-425 425-235 0-425-191-425-425v-1316c0-173-71-330-184-444-114-114-271-184-445-184s-331 70-445 184c-113 113-183 269-184 441v1319c0 234-190 425-425 425-234 0-425-191-425-425zm3320-630c-235 0-425-191-425-425 0-235 190-425 425-425h1823c235 0 425 190 425 425 0 234-190 425-425 425h-487v1944c0 234-190 425-425 425-234 0-425-191-425-425v-1944zm2627-425c0-235 190-425 425-425s425 190 425 425v2369c0 234-190 425-425 425s-425-191-425-425zm1363 1055v-73c0-28 3-55 8-82 36-347 192-658 425-892 268-268 638-433 1046-433s778 165 1046 433c267 268 433 637 433 1045v1316c0 234-190 425-425 425s-425-191-425-425v-1316c0-173-71-330-184-444-114-114-271-184-445-184s-331 70-445 184c-113 113-183 269-184 441v1319c0 234-190 425-425 425-234 0-425-191-425-425zm6087 0v-73c0-28 3-55 8-82 36-347 192-658 425-892 268-268 638-433 1046-433s778 165 1046 433c267 268 433 637 433 1045v1316c0 234-191 425-425 425-235 0-425-191-425-425v-1316c0-173-71-330-184-444-114-114-271-184-445-184s-331 70-445 184c-113 113-183 269-184 441v1319c0 234-190 425-425 425-234 0-425-191-425-425zm-1848-364c28 29 67 46 110 46h908c235 0 425 190 425 425s-190 425-425 425h-908c-43 0-82 18-110 46-29 28-46 67-46 110s17 82 46 111c28 28 67 45 110 45v1l13-1h895c235 0 425 191 425 425 0 235-190 425-425 425h-908c-278 0-529-112-711-294-183-182-295-434-295-712 0-216 68-417 185-581-117-164-185-365-185-581 0-278 112-529 295-712 182-182 433-294 711-294h908c235 0 425 190 425 425 0 234-190 425-425 425h-908c-43 0-82 17-110 45-29 29-46 68-46 111s17 82 46 110zm5305-266c-235 0-425-191-425-425 0-235 190-425 425-425h1823c235 0 425 190 425 425 0 234-190 425-425 425h-487v1944c0 234-190 425-425 425-234 0-425-191-425-425v-1944zm3332 266c28 29 67 46 110 46h908c235 0 425 190 425 425s-190 425-425 425h-908c-43 0-82 18-110 46s-46 67-46 110 18 82 46 111c28 28 67 45 110 45v1l14-1h894c235 0 425 191 425 425 0 235-190 425-425 425h-908c-278 0-529-112-711-294s-295-434-295-712c0-216 68-417 185-581-117-164-185-365-185-581 0-278 113-529 295-712 182-182 433-294 711-294h908c235 0 425 190 425 425 0 234-190 425-425 425h-908c-43 0-82 17-110 45-28 29-46 68-46 111s18 82 46 110z" fill-rule="nonzero"/></g></svg></div>
+    <h2 style="font-size:17px;font-weight:700;color:#1A202C;margin:0 0 4px;">Relatório Integrado Semanal</h2>
+    <p style="font-size:12px;color:#4A5568;margin:0 0 26px;">Acesso Restrito · Elife Portugal</p>
+    <div style="position:relative;margin-bottom:10px;">
+      <input id="pwdInput" type="password" placeholder="Senha de acesso" style="width:100%;border:1.5px solid #E2E8F0;border-radius:10px;padding:11px 44px 11px 14px;font-size:13px;color:#1A202C;outline:none;background:#fff;" onfocus="this.style.borderColor='#E30613'" onblur="this.style.borderColor='#E2E8F0'" onkeydown="if(event.key==='Enter')doLogin()">
+      <button onclick="togglePwd()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#718096;padding:0;">
+        <svg id="eyeIco" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <p id="pwdErr" style="color:#E30613;font-size:11px;margin:0 0 10px;min-height:16px;display:none;">Senha incorreta.</p>
+    <button onclick="doLogin()" style="width:100%;background:#E30613;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;" onmouseover="this.style.background='#C00410'" onmouseout="this.style.background='#E30613'">Entrar</button>
+    <p style="font-size:10px;color:#CBD5E1;margin:20px 0 0;">Sonae MC · Social Listening Intelligence</p>
+  </div>
+</div>
+<script>
+function doLogin(){const i=document.getElementById('pwdInput'),e=document.getElementById('pwdErr');if(i.value==='@SemanalMC2026'){document.getElementById('loginScreen').style.display='none';e.style.display='none';}else{e.style.display='block';i.style.borderColor='#E30613';i.focus();i.select();}}
+function togglePwd(){const i=document.getElementById('pwdInput'),ic=document.getElementById('eyeIco');if(i.type==='password'){i.type='text';ic.innerHTML='<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';}else{i.type='password';ic.innerHTML='<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';}}
+</script>
+
+<!-- HEADER -->
+<header class="bg-[#E30613] text-white no-print">
+  <div class="max-w-[1200px] mx-auto px-5 py-3 flex items-center justify-between gap-3 flex-wrap">
+    <div class="flex items-center gap-3">
+      <!-- Continente wordmark inline -->
+      <div style="background:#fff;border-radius:8px;padding:4px 10px;display:flex;align-items:center;">
+        <svg width="110" height="24" viewBox="0 0 110 24" xmlns="http://www.w3.org/2000/svg">
+          <rect width="110" height="24" rx="4" fill="#E30613"/>
+          <text x="55" y="17" font-family="'Arial Black','Segoe UI',sans-serif" font-size="12" font-weight="900" fill="#fff" text-anchor="middle" letter-spacing=".5">CONTINENTE</text>
+        </svg>
+      </div>
+      <div>
+        <h1 class="text-[14px] md:text-[15px] font-bold leading-tight">Relatório Integrado Semanal</h1>
+        <p class="text-white/80 text-[11px]">CRM &amp; Social Listening · 04 Jul–07 Ago 2026 · Elife Portugal</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 flex-wrap">
+      <span id="badgeSemana" class="bg-white/15 border border-white/25 rounded-full px-3 py-1 text-[11px] font-semibold whitespace-nowrap">04–10 de Julho de 2026</span>
+      <button onclick="window.print()" class="no-print bg-white text-[#E30613] hover:bg-red-50 rounded-full px-3 py-1 text-[11px] font-semibold flex items-center gap-1.5 transition">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Imprimir PDF
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<div class="no-print sticky top-0 z-20 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+  <div class="max-w-[1200px] mx-auto px-5 py-2 flex items-center justify-between gap-3 flex-wrap">
+    <nav class="flex gap-1.5">
+      <!-- Social icon for CRM (speech bubble = social media interactions) -->
+      <button data-tab="crm" class="tab-btn active px-4 py-1.5 rounded-full text-[11px] font-semibold border border-slate-200 text-slate-600 bg-white transition flex items-center gap-1.5">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>CRM
+      </button>
+      <!-- Globe icon for Social Listening -->
+      <button data-tab="listening" class="tab-btn px-4 py-1.5 rounded-full text-[11px] font-semibold border border-slate-200 text-slate-600 bg-white transition flex items-center gap-1.5">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Social Listening
+      </button>
+    </nav>
+    <div class="flex items-center gap-2">
+      <label class="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Semana</label>
+      <select id="selSemana" class="bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-[11px] font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#E30613]/25">
+        <option value="04-10 de Julho de 2026" selected>04–10 Jul 2026</option>
+        <option value="11-17 de Julho de 2026">11–17 Jul 2026</option>
+        <option value="18-24 de Julho de 2026">18–24 Jul 2026</option>
+        <option value="25-31 de Julho de 2026">25–31 Jul 2026</option>
+        <option value="01-07 de Agosto de 2026">01–07 Ago 2026</option>
+        <option value="08-14 de Agosto de 2026">08–14 Ago 2026</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="max-w-[1200px] mx-auto px-5 py-5">
+
+<!-- ===== CRM ===== -->
+<section id="view-crm" class="view">
+  <div class="mb-3">
+    <h2 class="text-[15px] font-bold text-[#1A202C]">CRM — Atendimento nas Redes Sociais</h2>
+    <p class="text-[11px] text-slate-500 mt-0.5">Customer Care Intelligence · Continente · Fonte: Buzzmonitor CRM</p>
+  </div>
+  <div class="bg-white border-l-4 border-[#E30613] rounded-xl border border-slate-200 shadow-sm px-4 py-2.5 mb-4">
+    <p class="text-[11px] text-[#2D3748] leading-relaxed"><span class="font-semibold text-[#1A202C]">🔎 Âmbito CRM:</span> cobre Facebook, Instagram, TikTok, YouTube e Google Play Store. A equipa classifica e responde apenas às interações passíveis de atendimento. Dados de CRM não entram no universo comparável de SOV/Listening.</p>
+  </div>
+
+  <!-- SLA -->
+  <div class="card p-4 mb-4 overflow-x-auto scroll-thin">
+    <h3 class="font-semibold text-[#1A202C] text-[13px] mb-3 flex items-center gap-1.5">SLA de Atendimento — 5 Semanas
+      <span class="tt-wrap"><span class="tt-icon">?</span><span class="tt-body">SLA Total: tempo médio da criação do contacto até à 1.ª resposta. SLA N1: tempo médio de resolução de nível 1 — métrica independente do SLA Total. SLA contratado: 4 horas.</span></span>
+    </h3>
+    <table class="w-full text-[11px] min-w-[520px]">
+      <thead><tr class="text-left text-[10px] text-slate-500 uppercase tracking-wide border-b border-slate-200">
+        <th class="py-2 pr-4">Semana</th><th class="py-2 pr-4">SLA Total</th><th class="py-2 pr-4">SLA N1</th><th class="py-2">Nota</th>
+      </tr></thead>
+      <tbody class="divide-y divide-slate-100">
+        <tr><td class="py-2 pr-4 font-semibold text-[#2D3748]">04–10 Jul</td><td class="py-2 pr-4 font-bold text-[#1A202C]">57m 42s</td><td class="py-2 pr-4 font-bold text-[#1A202C]">56m 43s</td><td class="py-2 text-[10px] text-slate-500">Semana inicial</td></tr>
+        <tr><td class="py-2 pr-4 font-semibold text-[#2D3748]">11–17 Jul</td><td class="py-2 pr-4 font-bold text-[#1A202C]">1h 14m 09s</td><td class="py-2 pr-4 font-bold text-[#1A202C]">51m 42s</td><td class="py-2 text-[10px] text-amber-700 font-semibold">SLA Total subiu · N1 melhorou</td></tr>
+        <tr><td class="py-2 pr-4 font-semibold text-[#2D3748]">18–24 Jul</td><td class="py-2 pr-4 font-bold text-[#1A202C]">1h 20m 49s</td><td class="py-2 pr-4 font-bold text-[#1A202C]">39m 29s</td><td class="py-2 text-[10px] text-amber-700 font-semibold">SLA Total pico máximo · N1 melhorou</td></tr>
+        <tr><td class="py-2 pr-4 font-semibold text-[#2D3748]">25–31 Jul</td><td class="py-2 pr-4 font-bold text-[#1A202C]">43m 39s</td><td class="py-2 pr-4 font-bold text-[#1A202C]">37m 43s</td><td class="py-2 text-[10px] text-green-700 font-semibold">▼ Melhoria expressiva</td></tr>
+        <tr class="bg-green-50/50"><td class="py-2 pr-4 font-bold wine">01–07 Ago ★</td><td class="py-2 pr-4 font-bold wine">31m 49s</td><td class="py-2 pr-4 font-bold text-[#1A202C]">36m 26s</td><td class="py-2 text-[10px] text-green-700 font-semibold">▼ Melhor SLA Total do período</td></tr>
+        <tr><td class="py-2 pr-4 font-semibold text-[#2D3748]">08–14 Ago</td><td class="py-2 pr-4 font-bold text-[#1A202C]">1h 11m 25s</td><td class="py-2 pr-4 font-bold text-[#1A202C]">1h 00m 28s</td><td class="py-2 text-[10px] text-amber-700 font-semibold">SLA Total subiu · dentro do objetivo 4h</td></tr>
+      </tbody>
+    </table>
+    <p class="text-[10px] text-slate-500 mt-2">SLA contratado: 4 horas. Todas as semanas dentro do objetivo. SLA Total e SLA N1 são métricas independentes — não somar.</p>
+  </div>
+
+  <div class="grid lg:grid-cols-12 gap-3 mb-3">
+    <div class="card p-4 lg:col-span-7">
+      <h3 class="font-semibold text-[#1A202C] text-[13px] mb-3">Sentimento — Total de Interações</h3>
+      <div class="grid grid-cols-3 gap-2.5" id="crmSentGrid"></div>
+      <p class="text-[10px] text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1.5 mt-3 leading-snug" id="crmNota"></p>
+    </div>
+    <div class="lg:col-span-5 grid grid-cols-1 gap-3" id="crmKpisGrid"></div>
+  </div>
+
+  <div class="grid lg:grid-cols-12 gap-3 mb-3">
+    <div class="card p-4 lg:col-span-4">
+      <h3 class="font-semibold text-[#1A202C] text-[13px] mb-3">Volume por Canal</h3>
+      <div id="crmCanaisGrid" class="space-y-2.5"></div>
+    </div>
+    <div class="card p-4 lg:col-span-4">
+      <h3 class="font-semibold text-[#1A202C] text-[13px] mb-3">Origem do Atendimento</h3>
+      <div class="h-32"><canvas id="chartOrigem"></canvas></div>
+      <div id="crmOrigemList" class="mt-3 space-y-1.5"></div>
+    </div>
+    <div class="card p-4 lg:col-span-4">
+      <h3 class="font-semibold text-[#1A202C] text-[13px] mb-3 flex items-center gap-1">Top Assuntos por Sentimento
+        <span class="tt-wrap"><span class="tt-icon">?</span><span class="tt-body">Volume por assunto, dividido em Negativo/Neutro/Positivo. Classificação Buzzmonitor. Ordenados por volume total.</span></span>
+      </h3>
+      <div id="crmAssuntosBarGrid" class="space-y-2.5"></div>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-12 gap-3 mb-3">
+    <div class="card p-4 lg:col-span-8">
+      <h3 class="font-semibold text-[#1A202C] text-[13px] mb-3">Assuntos Negativos — Top 3</h3>
+      <div class="grid md:grid-cols-3 gap-3" id="crmNeg3Grid"></div>
+    </div>
+    <div class="lg:col-span-4">
+      <div class="card wine-bg border-red-200 p-4 h-full flex flex-col">
+        <p class="text-[10px] font-bold wine uppercase tracking-wide mb-1.5">🔴 Principal tópico de insatisfação</p>
+        <p class="font-bold wine text-[13px] mb-1" id="crmPiorTitulo"></p>
+        <p class="text-[11px] text-[#4A5568] leading-relaxed" id="crmPiorExpl"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-4 mb-3">
+    <h3 class="font-semibold text-[#1A202C] text-[13px] mb-3">Assuntos Positivos — Top 3</h3>
+    <div class="grid md:grid-cols-3 gap-3" id="crmPos3Grid"></div>
+  </div>
+
+  <div class="card p-4 mb-3">
+    <h3 class="font-semibold text-[#1A202C] text-[13px] mb-1">Top Post da Semana — CRM</h3>
+    <p class="text-[10px] text-slate-500 mb-3">Publicação própria com maior engagement · ordenado por curtidas · classificação de sentimento: Buzzmonitor</p>
+    <div id="crmTopPostArea"></div>
+  </div>
+
+  <div id="crmAlerta" class="mb-3"></div>
+  <div class="grid md:grid-cols-2 gap-3">
+    <div class="card p-4">
+      <p class="text-[11px] font-bold text-green-800 uppercase tracking-wide mb-2">✅ Leitura da Semana — Positivos</p>
+      <ul class="space-y-1.5 list-disc list-inside" id="crmLeituraPos"></ul>
+    </div>
+    <div class="card p-4">
+      <p class="text-[11px] font-bold wine uppercase tracking-wide mb-2">⚠️ Pontos a Acompanhar</p>
+      <ul class="space-y-1.5 list-disc list-inside" id="crmLeituraNeg"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LISTENING ===== -->
+<section id="view-listening" class="view hidden">
+  <div class="mb-3">
+    <h2 class="text-[15px] font-bold text-[#1A202C]">Social Listening &amp; Consumer Intelligence</h2>
+    <p class="text-[11px] text-slate-500 mt-0.5">Continente · Owned + Earned · Redes públicas · Fonte: Buzzmonitor Listening</p>
+  </div>
+  <div class="bg-white border-l-4 border-[#E30613] rounded-xl border border-slate-200 shadow-sm px-4 py-2.5 mb-4">
+    <p class="text-[11px] text-[#2D3748] leading-relaxed"><span class="font-semibold text-[#1A202C]">🔎 Âmbito Listening:</span> X, YouTube, Facebook, Instagram, TikTok, Reddit, Fóruns, Notícias, Blogs, Miscelâneos — excluindo mensagens privadas. Owned e earned. Owned/canais próprios não comparados diretamente com concorrência.</p>
+  </div>
+
+  <div class="sec-divider general"><span>📊 Visão Geral — Todas as Menções (universo não comparável)</span></div>
+
+  <div class="card p-4 mb-3">
+    <h3 class="font-semibold text-[#1A202C] text-[13px] mb-1">Divisão Owned vs. Earned Media</h3>
+    <p class="text-[10px] text-slate-500 mb-3" id="slOwnedEarnedUni"></p>
+    <div class="grid lg:grid-cols-12 gap-4 items-center">
+      <div class="lg:col-span-3"><div class="h-40"><canvas id="chartOwnedEarned"></canvas></div></div>
+      <div class="lg:col-span-9 grid sm:grid-cols-2 gap-3" id="slOwnedEarnedCards"></div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-1" id="slKpisGrid"></div>
+  <p class="text-[10px] text-slate-500 mb-0.5">Volume Total = Owned + Earned · Todas as redes, universo não comparável</p>
+  <p class="text-[10px] text-amber-700 mb-4" id="slKpisNota"></p>
+
+  <div class="grid lg:grid-cols-12 gap-3 mb-3 items-stretch">
+    <div class="card p-4 lg:col-span-4 flex flex-col">
+      <h3 class="font-semibold text-[#1A202C] text-[13px] mb-1">Distribuição de Sentimento</h3>
+      <p class="text-[10px] text-slate-500 mb-2" id="slSentUni"></p>
+      <div class="h-44 flex-1"><canvas id="chartSentimento"></canvas></div>
+      <div class="grid grid-cols-3 gap-1.5 mt-2" id="slSentCards"></div>
+    </div>
+    <div class="lg:col-span-4 flex flex-col gap-3" id="slEngDestaques"></div>
+    <div class="lg:col-span-4">
+      <div class="card bg-gradient-to-br from-[#E30613] to-[#b8050f] text-white p-4 h-full flex flex-col justify-center shadow-sm">
+        <p class="text-[10px] font-bold uppercase tracking-wide mb-2 text-white/75">★ Destaque — Menções Não Comparáveis</p>
+        <p class="text-[12px] leading-relaxed" id="slDestaque"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-4 mb-3">
+    <h3 class="font-semibold text-[#1A202C] text-[13px] mb-2">Distribuição por Rede Social — Volume Total (não comparável)</h3>
+    <div class="grid lg:grid-cols-12 gap-3 items-center">
+      <div class="lg:col-span-3"><div class="h-36"><canvas id="chartRedeDist"></canvas></div></div>
+      <div class="lg:col-span-9 grid sm:grid-cols-3 md:grid-cols-4 gap-1.5" id="slRedeDistGrid"></div>
+    </div>
+  </div>
+
+  <h3 class="font-bold text-[#1A202C] text-[13px] mb-2">Top Posts da Semana — Continente <span class="text-[11px] font-normal text-slate-500">(por curtidas · classificação: Buzzmonitor)</span></h3>
+  <div class="grid md:grid-cols-3 gap-3 mb-3" id="slTopPostsGrid"></div>
+
+  <h3 class="font-bold text-[#1A202C] text-[13px] mb-1">Voz do Consumidor — Verbatims Reais</h3>
+  <p class="text-[10px] text-slate-500 mb-3">Comentários autênticos (autores ≠ marca/conta oficial) · texto original · link de origem disponível</p>
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4" id="slVerbatimsGrid"></div>
+
+  <div class="sec-divider comparable"><span>🔍 Universo Comparável — SOV &amp; Concorrência</span></div>
+
+  <div class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-3">
+    <p class="text-[11px] text-amber-900 leading-relaxed"><span class="font-bold">Nota metodológica SOV:</span> a comparação competitiva usa <strong>Facebook, X (Twitter), Instagram (apenas posts e reels), YouTube, Notícias, Blogs, Fóruns e Miscelâneos</strong>. O Instagram entra apenas com conteúdo publicado (posts/reels/carrosséis) — comparável entre marcas. A soma dos canais na tabela "Top redes por marca" é igual ao volume de SOV de cada marca. <em>Nota:</em> nas semanas de Julho e 01–07 Ago o Instagram comparável é estimado; a partir de 08–14 Ago é medido diretamente.</p>
+  </div>
+
+  <div class="grid lg:grid-cols-12 gap-3 mb-3">
+    <div class="card p-4 lg:col-span-5">
+      <h4 class="font-semibold text-[#1A202C] text-[13px] mb-1 flex items-center gap-1">Share of Voice em Volume
+        <span class="tt-wrap"><span class="tt-icon">?</span><span class="tt-body">SOV = Volume Marca ÷ Volume Total Mercado Comparável × 100. Canais incluídos: Facebook, X, Instagram (posts/reels), YouTube, Notícias, Blogs, Fóruns, Misc.</span></span>
+      </h4>
+      <p class="text-[10px] text-slate-500 mb-2" id="slSovSubtitle"></p>
+      <div class="h-56"><canvas id="chartConcorrencia"></canvas></div>
+    </div>
+    <div class="card p-4 lg:col-span-7 overflow-x-auto scroll-thin">
+      <h4 class="font-semibold text-[#1A202C] text-[13px] mb-1 flex items-center gap-1">Benchmark Competitivo — Net Sentiment Score
+        <span class="tt-wrap"><span class="tt-icon">?</span><span class="tt-body">NSS = (Pos÷(Pos+Neg))×100 − (Neg÷(Pos+Neg))×100. Calculado sobre menções classificadas no universo comparável. Tendência = variação numérica vs. semana anterior. ▲ subiu · ▼ desceu · ▬ manteve.</span></span>
+      </h4>
+      <p class="text-[10px] text-slate-500 mb-2">Ordenado do maior para o menor NSS</p>
+      <table class="w-full text-[11px] min-w-[340px]">
+        <thead><tr class="text-left text-[10px] text-slate-400 uppercase tracking-wide border-b border-slate-200">
+          <th class="py-1.5 pr-3">#</th><th class="py-1.5 pr-3">Marca</th><th class="py-1.5 pr-3">NSS</th><th class="py-1.5">Tendência vs. sem. anterior</th>
+        </tr></thead>
+        <tbody id="slBenchBody"></tbody>
+      </table>
+      <p class="text-[10px] text-slate-500 mt-2" id="slBenchNota"></p>
+    </div>
+  </div>
+
+  <div class="card p-4 mb-4">
+    <h4 class="font-semibold text-[#1A202C] text-[13px] mb-1">Top redes por marca <span class="text-[10px] font-normal text-slate-500">— base SOV/NSS · soma = volume comparável</span></h4>
+    <p class="text-[10px] text-slate-500 mb-3">Soma dos canais = volume exacto usado no SOV. Owned/canais próprios não comparados com concorrência.</p>
+    <div class="grid md:grid-cols-2 gap-x-6 gap-y-3" id="slRedesMarcaGrid"></div>
+  </div>
+
+  <h3 class="font-bold text-[#1A202C] text-[13px] mb-2">Temas em destaque — Concorrência</h3>
+  <div class="grid gap-3 mb-3" id="slTemasGrid"></div>
+  <div class="grid gap-3" id="slMovimentosGrid"></div>
+</section>
+</main>
+
+<footer class="no-print max-w-[1200px] mx-auto px-5 py-4 text-[10px] text-slate-400 border-t border-slate-200 mt-4">
+  Intelligence &amp; Social Listening · Elife Portugal · Semana <span id="footSemana">04–10 de Julho de 2026</span> · 04 Jul–07 Ago 2026 · v17
+</footer>
+<script>
+// v17 — dados corrigidos
+// CRM canais: dados reais do Excel (sem "Outros")
+// Verbatims: URLs reais extraídas
+// Volume SL não comparável: 5.191
+// NSS não comparável exibido na secção geral
+// Destaque geral: foco em menções não comparáveis
+
+const NSS_PREV={
+  "04-10 de Julho de 2026":null,
+  "11-17 de Julho de 2026":{Continente:1.2,Lidl:38.5,"Pingo Doce":1.7,Mercadona:3.9,Auchan:30.5},
+  "18-24 de Julho de 2026":{Continente:25.4,Lidl:-0.7,"Pingo Doce":-12.8,Mercadona:-20.4,Auchan:2.0},
+  "25-31 de Julho de 2026":{Continente:10.6,Lidl:-6.5,"Pingo Doce":31.6,Mercadona:13.8,Auchan:11.9},
+  "01-07 de Agosto de 2026":{Continente:47.4,Lidl:7.1,"Pingo Doce":77.5,Mercadona:-24.0,Auchan:56.2},
+  "08-14 de Agosto de 2026":{Continente:62.6,Lidl:22.1,"Pingo Doce":56.2,Mercadona:-21.4,Auchan:-52.4}
+};
+
+const DADOS_W1={meta:{semana:"04-10 de Julho de 2026"},
+crm:{
+  sentimento:[{tipo:"Positivo",vol:384,pct:"75,3%",var:"",cor:"verde"},{tipo:"Neutro",vol:57,pct:"11,2%",var:"",cor:"ambar"},{tipo:"Negativo",vol:69,pct:"13,5%",var:"",cor:"vermelho"}],
+  kpis:{total:510,varTotal:"Semana inicial",sla:"00:57:42",slaVar:"Semana inicial",n1:"00:56:43"},
+  nota:"ℹ️ Semana inicial (04–10 Jul). Sem dados de semana anterior para comparação.",
+  canais:[{canal:"Facebook",vol:244,pct:"47,8%"},{canal:"Instagram",vol:225,pct:"44,1%"},{canal:"TikTok",vol:36,pct:"7,1%"},{canal:"YouTube",vol:5,pct:"1,0%"}],
+  origem:[{tipo:"Owned Media",vol:483,pct:"94,7%"},{tipo:"Earned Media",vol:27,pct:"5,3%"}],
+  assuntos:[{nome:"Eventos/Causas",neg:8,neu:12,pos:95,total:115},{nome:"Frescos",neg:10,neu:9,pos:72,total:91},{nome:"Serviços Cliente",neg:25,neu:7,pos:18,total:50},{nome:"Entregas Online",neg:18,neu:4,pos:8,total:30},{nome:"Cartão",neg:14,neu:5,pos:6,total:25}],
+  neg3:[{motivo:"Serviços ao Cliente",pct:"17%",vol:17,expl:"Comentários sobre dificuldades no atendimento presencial, falta de resposta e experiências negativas em loja. Padrão recorrente no período."},{motivo:"Entregas Online",pct:"12%",vol:12,expl:"Queixas de atrasos em encomendas, falha de comunicação no rastreamento e produtos em falta na entrega."},{motivo:"Cartão Continente",pct:"9%",vol:9,expl:"Questões sobre acumulação de pontos, validade de benefícios e problemas com o cartão em app e loja."}],
+  piorMotivo:{titulo:"Serviços ao Cliente",expl:"Principal tópico negativo da semana (17% dos negativos): comentários sobre atendimento presencial deficiente, falta de resposta a pedidos e experiências negativas em loja. Casos encaminhados via ticket."},
+  pos3:[{motivo:"Eventos e Causas",pct:"23%",expl:"Forte envolvimento com o contexto do Euro — elogios à decoração das lojas, campanhas temáticas e espírito desportivo."},{motivo:"Frescos",pct:"17%",expl:"Elogios à qualidade e variedade dos frescos de Verão — melancia, melão branco e meloa Cantalupe com alta satisfação."},{motivo:"Marca Própria",pct:"8%",expl:"Satisfação com novidades e qualidade dos produtos de marca própria.",tooltip:"Marca Própria: linha de produtos com o rótulo do próprio retalhista (marca branca do Continente)."}],
+  topPost:{rede:"Facebook",tema:"Frescos — melancia, melão branco e meloa Cantalupe",eng:"4.606 curtidas",analise:"109 partilhas, 228 comentários. Maior post Owned por curtidas da semana. Classificação: Positivo.",tipo:"Owned",url:"https://facebook.com/1463395912496761"},
+  alerta:{ativo:true,msg:"ℹ️ Semana coincide com o Euro — engagement associado a Eventos e Causas é excecional (23% dos positivos)."},
+  leituraPos:["Sentimento positivo expressivo (75,3%) — destaque para frescos sazonais (melancia, melão, meloa Cantalupe) com elogios à qualidade e apresentação em loja. Eventos e Causas lidera impulsionado pelo Euro, com comentários sobre decoração e campanhas temáticas.","Facebook foi o canal com maior volume de atendimento (244) — maioritariamente interações positivas em publicações de produto."],
+  leituraNeg:["Serviços ao Cliente concentra 17% das interações negativas — padrão de comentários sobre falta de resposta, atendimento presencial demorado e experiências em loja. ","Entregas Online já no 2.º lugar negativo (12%) — queixas de atrasos e rastreamento deficiente. Padrão que se mantém ao longo do período."]
+},
+sl:{
+  ownedEarned:{owned:{vol:1826,pct:"35,2%",desc:"Conteúdos e interações em canais oficiais"},earned:{vol:3358,pct:"64,8%",desc:"Menções espontâneas, notícias, fóruns, UGC"},uni:"Owned (1.826) + Earned (3.358) = 5.184 menções"},
+  kpis:{volTotal:"5.184",nssNaoComp:"+24,0",volVar:"Semana inicial",volDir:"none",sov:"42,53%",sovVar:"Semana inicial",sovDir:"none",nss:"+1,2",nssVar:"Semana inicial",nssDir:"none"},
+  kpisNota:"",
+  sentimento:{pos:{vol:2315,pct:"44,7%"},neu:{vol:1800,pct:"34,7%"},neg:{vol:1069,pct:"20,6%"},uni:"Sentimento sobre volume total não comparável (5.184 menções). NSS não comparável = +24,0."},
+  redes:[{r:"Facebook",v:2805,p:"54,1%"},{r:"Instagram",v:1784,p:"34,4%"},{r:"TikTok",v:373,p:"7,2%"},{r:"Notícias",v:193,p:"3,7%"},{r:"YouTube",v:10,p:"0,2%"},{r:"Blogs",v:11,p:"0,2%"},{r:"Fóruns",v:3,p:"0,1%"}],
+  engPos:{post:"Frescos — melancia, melão e meloa Cantalupe (FB)",eng:"4.606 curtidas",mot:"109 partilhas, 228 comentários. Maior post Owned por curtidas. Classificação Buzzmonitor: Positivo.",url:"https://facebook.com/1463395912496761"},
+  engNeg:{post:"Euro/Seleção — publicação com sentimento misto (FB)",eng:"2.095 curtidas",mot:"98 partilhas, 464 comentários. Sentimento misto — euforia e frustração. Classificação Buzzmonitor: Misto.",url:"https://facebook.com/1466437062192646"},
+  engAnalise:"Semana dominada pela campanha de frescos e pelo Euro — duas narrativas paralelas que geraram os maiores volumes de interação.",
+  destaque:"Das 5.184 menções totais, 64,8% foram earned (menções espontâneas) — sinal de forte presença orgânica. Facebook concentrou 54,1% do volume não comparável. O conteúdo de frescos sazonais foi o tema mais positivo, com a campanha de melão e melancia a liderar em engagement. O contexto do Euro trouxe volume mas também polarização — NSS não comparável de +24,0.",
+  topPosts:[{rede:"Facebook",tema:"Frescos — melancia, melão branco e meloa Cantalupe",eng:"4.606 curtidas",analise:"109 partilhas, 228 comentários. Classificação: Positivo.",tipo:"Owned",url:"https://facebook.com/1463395912496761"},{rede:"Instagram",tema:"Espírito português — campanha Euro/Seleção",eng:"4.263 curtidas",analise:"18 comentários. Classificação: Positivo.",tipo:"Owned",url:"https://www.instagram.com/p/Dad1OKKst_S/"},{rede:"Facebook",tema:"Água de Coco — escolha para dias quentes",eng:"2.716 curtidas",analise:"76 partilhas, 131 comentários. Classificação: Positivo.",tipo:"Owned",url:"https://facebook.com/1468806851955667"}],
+  verbatims:[{txt:"É um matcha diferente todos os dias, por favor 👀 @Alpro @Continente @monin_ireland",autor:"laramtlopes",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7660620077259115809",comments:59},{txt:"Venham comigo e com a minha mãe provar Melties de morango do continente, espero que gostem",autor:"beaa.mendesss",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7659412194655866134",comments:22},{txt:"Melties de 🍓 do @Continente! #viral #portugal🇵🇹 #melties",autor:"filipa.m99",rede:"TikTok",cat:"Comentário",url:"https://www.tiktok.com/@/video/7658658107052100897",comments:27},{txt:"Um Dia Comigo na Covilhã — depois de dois meses sem vir cá, estava cheia de saudades. Compras no Continente incluídas!",autor:"dada_m00",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7659801305879252246",comments:30}],
+  sov:{total:7667,marcas:[{m:"Lidl",v:3348,p:"43,67%"},{m:"Continente",v:3261,p:"42,53%"},{m:"Pingo Doce",v:582,p:"7,59%"},{m:"Mercadona",v:288,p:"3,76%"},{m:"Auchan",v:188,p:"2,45%"}]},
+  benchNSS:[{m:"Lidl",nss:38.5},{m:"Auchan",nss:30.5},{m:"Mercadona",nss:3.9},{m:"Pingo Doce",nss:1.7},{m:"Continente",nss:1.2}],
+  redesMarca:[{marca:"Continente",canais:[{c:"Facebook",v:2805,p:"86,0%"},{c:"Instagram",v:238,p:"7,3%"},{c:"Notícias",v:193,p:"5,9%"},{c:"Blogs",v:11,p:"0,3%"},{c:"YouTube",v:10,p:"0,3%"},{c:"Fóruns",v:4,p:"0,1%"}],total:3261,nota:"Instagram comparável (posts/reels) estimado para semanas anteriores."},{marca:"Lidl",canais:[{c:"Facebook",v:2661,p:"79,5%"},{c:"Notícias",v:346,p:"10,3%"},{c:"Instagram",v:173,p:"5,2%"},{c:"X (Twitter)",v:122,p:"3,6%"},{c:"Blogs",v:34,p:"1,0%"},{c:"Outros",v:12,p:"0,4%"}],total:3348},{marca:"Pingo Doce",canais:[{c:"Facebook",v:465,p:"79,9%"},{c:"X (Twitter)",v:48,p:"8,2%"},{c:"Instagram",v:43,p:"7,4%"},{c:"Notícias",v:22,p:"3,8%"},{c:"Blogs",v:4,p:"0,7%"}],total:582},{marca:"Mercadona",canais:[{c:"Facebook",v:215,p:"74,7%"},{c:"X (Twitter)",v:45,p:"15,6%"},{c:"Notícias",v:18,p:"6,2%"},{c:"Instagram",v:7,p:"2,4%"},{c:"Blogs",v:3,p:"1,0%"}],total:288},{marca:"Auchan",canais:[{c:"Facebook",v:162,p:"86,2%"},{c:"Notícias",v:12,p:"6,4%"},{c:"Instagram",v:11,p:"5,9%"},{c:"Outros",v:3,p:"1,6%"}],total:188}],
+  temas:[{marca:"Lidl",cor:"#0050A0",tema:"Parceria com Gleba & produto premium",posPost:"Parceria Lidl×Gleba — mesa portuguesa (FB)",posEng:"7.304 curtidas",posMot:"Maior post da concorrência — campanha aspiracional premium.",posUrl:"https://facebook.com/1456292163208178",negPost:"Volcanix — produto de calor (FB)",negEng:"4.985 curtidas",negMot:"Sentimento misto — debate sobre eficácia do produto.",negUrl:"https://facebook.com/1453487736821954",analise:"Lidl lidera SOV (44,13%) e NSS (+38,5). Parceria com a Gleba posicionou a marca como destino de qualidade premium.",destaque:"Maior NSS do setor (+38,5) e maior volume."},{marca:"Pingo Doce",cor:"#0A6B3B",tema:"Campanha de limpeza — destino sempre limpo",posPost:"Destino sempre limpo, brilhante e perfumado (FB)",posEng:"4.438 curtidas",posMot:"Forte receção positiva.",posUrl:"https://facebook.com/1430825255746587",negPost:"Sem post negativo de destaque",negEng:"—",negMot:"Sentimento equilibrado.",negUrl:"",analise:"7,5% SOV, NSS +1,7.",destaque:"Sentimento equilibrado (NSS +1,7)."},{marca:"Mercadona",cor:"#F58220",tema:"Produto capilar — definição e volume",posPost:"Ondas descontraídas ou com mais definição (FB)",posEng:"783 curtidas",posMot:"Adesão moderada.",posUrl:"https://facebook.com/1321335703511785",negPost:"Sentimento neutro — semana residual",negEng:"—",negMot:"NSS +3,9.",negUrl:"",analise:"3,9% SOV, NSS +3,9.",destaque:"Volume residual."},{marca:"Auchan",cor:"#7C3AED",tema:"Campanha de Verão — sangria e produtos sazonais",posPost:"Sangria de Verão (FB)",posEng:"2.581 curtidas",posMot:"53 comentários, 58 partilhas.",posUrl:"https://facebook.com/1448676897304952",negPost:"Sem post negativo de destaque",negEng:"—",negMot:"Sentimento muito positivo.",negUrl:"",analise:"NSS +30,5 com 2,5% SOV.",destaque:"Melhor NSS do setor (+30,5)."}],
+  movimentos:[{titulo:"Síntese competitiva — 04–10 Jul 2026",texto:"O Lidl lidera SOV (44,13%) e NSS (+38,5) — parceria com a Gleba. O Continente próximo em volume (42,02%) com NSS de +1,2, penalizado pela polarização do Euro. O Auchan tem o melhor NSS (+30,5) apesar do menor volume. Semana inicial — sem comparação WoW."}]
+}};
+
+const DADOS_W2={meta:{semana:"11-17 de Julho de 2026"},
+crm:{
+  sentimento:[{tipo:"Positivo",vol:838,pct:"87,2%",var:"▲ +11,9 p.p. vs. sem. anterior",cor:"verde"},{tipo:"Neutro",vol:63,pct:"6,6%",var:"▼ −4,6 p.p.",cor:"ambar"},{tipo:"Negativo",vol:60,pct:"6,2%",var:"▼ −7,3 p.p.",cor:"vermelho"}],
+  kpis:{total:961,varTotal:"▲ +88% vs. sem. anterior",sla:"01:14:09",slaVar:"▲ Subiu — semana de alto volume",n1:"00:51:42"},
+  nota:"ℹ️ Volume excecional (961 interações) — Festival da Comida Continente (11–12 Jul).",
+  canais:[{canal:"Facebook",vol:374,pct:"38,9%"},{canal:"Instagram",vol:503,pct:"52,3%"},{canal:"TikTok",vol:67,pct:"7,0%"},{canal:"YouTube",vol:16,pct:"1,7%"},{canal:"Google Play",vol:1,pct:"0,1%"}],
+  origem:[{tipo:"Owned Media",vol:883,pct:"91,9%"},{tipo:"Earned Media",vol:78,pct:"8,1%"}],
+  assuntos:[{nome:"Eventos/Causas",neg:18,neu:14,pos:652,total:684},{nome:"Receitas",neg:3,neu:8,pos:65,total:76},{nome:"Serviços Cliente",neg:20,neu:9,pos:7,total:36},{nome:"Cartão",neg:22,neu:8,pos:5,total:35},{nome:"Marca Própria",neg:4,neu:5,pos:26,total:35}],
+  neg3:[{motivo:"Eventos e Causas",pct:"23%",vol:18,expl:"Interações sobre logística do Festival da Comida — acesso, filas e questões operacionais no evento de 11–12 Jul. "},{motivo:"Cartão Continente",pct:"18%",vol:11,expl:"Reclamações sobre pontos não creditados, benefícios expirados e problemas na app do Cartão — "},{motivo:"Serviços ao Cliente",pct:"13%",vol:8,expl:"Questões gerais de atendimento — comunicação e resolução de pedidos em aberto de semanas anteriores."}],
+  piorMotivo:{titulo:"Eventos e Causas — logística do Festival",expl:"Negativos relacionados com a logística do Festival da Comida (11–12 Jul): comentários sobre acesso ao recinto, filas e disponibilidade de produtos. "},
+  pos3:[{motivo:"Eventos e Causas",pct:"78%",expl:"Enorme volume de elogios ao Festival da Comida — comentários sobre gastronomia, artistas, ambiente e organização. Maior semana positiva do período."},{motivo:"Receitas",pct:"7%",expl:"Conteúdo culinário com boa adesão — segundo maior positivo fora do Festival."},{motivo:"Marca Própria",pct:"3%",expl:"Satisfação com produtos de marca própria em contexto de evento.",tooltip:"Marca Própria: linha de produtos com o rótulo do próprio retalhista."}],
+  topPost:{rede:"Instagram",tema:"Palco Continente — Festival da Comida (IG Reel)",eng:"15.462 curtidas",analise:"750 partilhas, 167 comentários, 726.013 views. Maior por curtidas da semana. Classificação: Positivo.",tipo:"Owned",url:"https://www.instagram.com/reel/DatBMf2MFgR/"},
+  alerta:{ativo:true,msg:"ℹ️ Pico operacional — Festival da Comida gerou 961 interações (+88%). SLA Total dentro do objetivo contratado (4h)."},
+  leituraPos:["Sentimento excecional (87,2% positivo) — o Festival da Comida (11–12 Jul) gerou uma onda massiva de elogios: artistas, gastronomia, ambiente e organização dominaram as interações positivas desta semana.","Instagram foi o canal com maior volume (503 interações) — UGC espontâneo do Festival (reels, stories) impulsionou o owned media."],
+  leituraNeg:["SLA Total subiu para 1h14m — reflexo direto do aumento de volume (+88%), ainda 3,2× abaixo das 4h contratadas. Contexto: pico de Festival.","Fricções logísticas no Festival geraram 23% dos negativos — comentários sobre acesso e filas ao recinto. Padrão esperado em eventos de grande escala."]
+},
+sl:{
+  ownedEarned:{owned:{vol:6387,pct:"55,6%",desc:"Canais oficiais — Festival domina owned"},earned:{vol:5108,pct:"44,4%",desc:"UGC Festival, menções espontâneas, imprensa"},uni:"Owned (6.387) + Earned (5.108) = 11.495 menções"},
+  kpis:{volTotal:"11.495",nssNaoComp:"+54,9",volVar:"▲ +121,7% vs. sem. anterior",volDir:"up",sov:"52,14%",sovVar:"▲ +9,6 p.p.",sovDir:"up",nss:"+25,4",nssVar:"▲ +24,2 p.",nssDir:"up"},
+  kpisNota:"",
+  sentimento:{pos:{vol:7534,pct:"65,5%"},neu:{vol:2740,pct:"23,8%"},neg:{vol:1221,pct:"10,6%"},uni:"Sentimento sobre volume total não comparável (11.495). NSS não comparável = +54,9."},
+  redes:[{r:"Instagram",v:7446,p:"64,8%"},{r:"Facebook",v:3214,p:"28,0%"},{r:"TikTok",v:642,p:"5,6%"},{r:"Notícias",v:148,p:"1,3%"},{r:"YouTube",v:22,p:"0,2%"},{r:"Blogs",v:13,p:"0,1%"},{r:"Fóruns",v:10,p:"0,1%"}],
+  engPos:{post:"Anselmo Ralph no Palco Continente — Festival (IG Reel)",eng:"21.049 curtidas",mot:"550 partilhas, 576 comentários, 244.531 views. Classificação Buzzmonitor: Positivo.",url:"https://www.instagram.com/reel/DatRBYgszAF/"},
+  engNeg:{post:"Publicação com sentimento misto — logística do Festival (IG)",eng:"519 curtidas",mot:"Críticas ao acesso e organização — segundo dia do evento. Classificação Buzzmonitor: Negativo/Misto.",url:"https://www.instagram.com/reel/DaxzyGyk6eG/"},
+  engAnalise:"O Festival da Comida dominou completamente o buzz — Instagram foi o canal dominante (64,8%) com UGC espontâneo massivo e conteúdo owned.",
+  destaque:"Das 11.495 menções não comparáveis, 65,5% foram positivas — o NSS não comparável foi de +54,9, o mais alto do período. Instagram liderou com 64,8% do volume, impulsionado por reels e UGC do Festival da Comida. Earned media (44,4%) reflete a propagação espontânea do evento nas redes.",
+  topPosts:[{rede:"Instagram",tema:"Anselmo Ralph no Palco Continente — Festival",eng:"21.049 curtidas",analise:"550 partilhas, 576 comentários, 244.531 views. Classificação: Positivo.",tipo:"Owned",url:"https://www.instagram.com/reel/DatRBYgszAF/"},{rede:"Instagram",tema:"Palco Continente — Festival da Comida",eng:"15.462 curtidas",analise:"750 partilhas, 167 comentários, 726.013 views. Maior alcance do período. Classificação: Positivo.",tipo:"Owned",url:"https://www.instagram.com/reel/DatBMf2MFgR/"},{rede:"Facebook",tema:"Festival da Comida — recap dois dias",eng:"9.894 curtidas",analise:"562 partilhas, 519 comentários. Classificação: Positivo.",tipo:"Owned",url:"https://facebook.com/1471647808338238"}],
+  verbatims:[{txt:"juro estou passada que finalmente encontrei água de coco no Festival da Comida Continente 😭😭",autor:"abiagalvao",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7661322418320854279",comments:139},{txt:"Haul de compras do @Continente 🤗 #supermercado #compras #continente #haul",autor:"irinaferreira97",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7662762342945475873",comments:77},{txt:"A vida não passa a comer para quem precisa de ir de férias… 😅 @Continente #fyp #portugal",autor:"pattvcosta",rede:"TikTok",cat:"Crítica",url:"https://www.tiktok.com/@/video/7662851568529673504",comments:256},{txt:"Corram para o @Continente #fyp #foryou #foryourpage #fy #paratiii",autor:"laraamesquita",rede:"TikTok",cat:"Comentário",url:"https://www.tiktok.com/@/video/7662870452422855958",comments:108}],
+  sov:{total:7054,marcas:[{m:"Continente",v:3678,p:"52,14%"},{m:"Lidl",v:1729,p:"24,51%"},{m:"Pingo Doce",v:867,p:"12,29%"},{m:"Mercadona",v:570,p:"8,08%"},{m:"Auchan",v:210,p:"2,98%"}]},
+  benchNSS:[{m:"Continente",nss:25.4},{m:"Auchan",nss:2.0},{m:"Lidl",nss:-0.7},{m:"Pingo Doce",nss:-12.8},{m:"Mercadona",nss:-20.4}],
+  redesMarca:[{marca:"Continente",canais:[{c:"Facebook",v:3214,p:"87,4%"},{c:"Instagram",v:272,p:"7,4%"},{c:"Notícias",v:148,p:"4,0%"},{c:"YouTube",v:22,p:"0,6%"},{c:"Blogs",v:12,p:"0,3%"},{c:"Fóruns",v:10,p:"0,3%"}],total:3678,nota:"Instagram comparável (posts/reels) estimado para semanas anteriores."},{marca:"Lidl",canais:[{c:"Facebook",v:1424,p:"82,4%"},{c:"X (Twitter)",v:122,p:"7,1%"},{c:"Instagram",v:93,p:"5,4%"},{c:"Notícias",v:65,p:"3,8%"},{c:"Blogs",v:25,p:"1,4%"}],total:1729},{marca:"Pingo Doce",canais:[{c:"Facebook",v:686,p:"79,1%"},{c:"X (Twitter)",v:82,p:"9,5%"},{c:"Instagram",v:63,p:"7,3%"},{c:"Notícias",v:30,p:"3,5%"},{c:"Blogs",v:6,p:"0,7%"}],total:867},{marca:"Mercadona",canais:[{c:"Facebook",v:464,p:"81,4%"},{c:"X (Twitter)",v:65,p:"11,4%"},{c:"Notícias",v:21,p:"3,7%"},{c:"Instagram",v:16,p:"2,8%"},{c:"Blogs",v:4,p:"0,7%"}],total:570},{marca:"Auchan",canais:[{c:"Facebook",v:174,p:"82,9%"},{c:"Notícias",v:18,p:"8,6%"},{c:"Instagram",v:12,p:"5,7%"},{c:"Outros",v:6,p:"2,9%"}],total:210}],
+  temas:[{marca:"Lidl",cor:"#0050A0",tema:"Campanha humorística — produto gourmet",posPost:"'À venda em todos os LIDL, mas podes dizer que compraste numa loja gourmet' (FB)",posEng:"6.741 curtidas",posMot:"Tom humorístico aspiracional — forte adesão.",posUrl:"https://facebook.com/1463279115842816",negPost:"Post com sentimento misto (IG)",negEng:"519 curtidas",negMot:"Debate sobre produto.",negUrl:"https://www.instagram.com/reel/DaxzyGyk6eG/",analise:"Lidl NSS −0,7 e 24,8% SOV — semana eclipsada pelo Festival do Continente.",destaque:"NSS próximo de nulo (−0,7)."},{marca:"Pingo Doce",cor:"#0A6B3B",tema:"'Dois amigos divididos pelo corte' — viral",posPost:"Dois amigos, divididos pelo corte (FB)",posEng:"9.722 curtidas",posMot:"Post criativo viral — maior post da concorrência.",posUrl:"https://facebook.com/1442093317953114",negPost:"Sem post negativo de destaque",negEng:"—",negMot:"NSS negativo global.",negUrl:"",analise:"NSS −12,8 apesar do post viral (9.722 curtidas).",destaque:"Post viral mas NSS negativo (−12,8)."},{marca:"Mercadona",cor:"#F58220",tema:"Produtos de beleza — sobrancelhas definidas",posPost:"Sobrancelhas mais definidas transformam o olhar (FB)",posEng:"4.348 curtidas",posMot:"Boa adesão.",posUrl:"https://facebook.com/1328489582796397",negPost:"Sem post negativo de destaque",negEng:"—",negMot:"NSS −20,4 disperso.",negUrl:"",analise:"Pior NSS do setor (−20,4).",destaque:"Pior NSS do setor (−20,4)."},{marca:"Auchan",cor:"#7C3AED",tema:"Campanha de Verão — salada de praia",posPost:"Salada perfeita para o dia de praia (FB)",posEng:"1.455 curtidas",posMot:"Conteúdo sazonal.",posUrl:"https://facebook.com/1451887216983920",negPost:"Sem post negativo",negEng:"—",negMot:"Sentimento equilibrado.",negUrl:"",analise:"NSS +2,0 e 3% SOV.",destaque:"NSS positivo (+2,0) — estável."}],
+  movimentos:[{titulo:"Síntese competitiva — 11–17 Jul 2026",texto:"O Continente domina com Festival da Comida (SOV 51,62%, NSS +25,4). O Pingo Doce teve o maior post da concorrência (9.722 curtidas) mas NSS negativo (−12,8). A Mercadona com pior NSS (−20,4). O Lidl neutro (−0,7). O Auchan estável (+2,0)."}]
+}};
+
+const DADOS_W3={meta:{semana:"18-24 de Julho de 2026"},
+crm:{
+  sentimento:[{tipo:"Positivo",vol:184,pct:"73,6%",var:"▼ −13,6 p.p. vs. sem. anterior",cor:"verde"},{tipo:"Neutro",vol:24,pct:"9,6%",var:"▲ +3,0 p.p.",cor:"ambar"},{tipo:"Negativo",vol:42,pct:"16,8%",var:"▲ +10,6 p.p.",cor:"vermelho"}],
+  kpis:{total:250,varTotal:"▼ −74% vs. sem. anterior",sla:"01:20:49",slaVar:"SLA Total pico máximo · N1 melhorou",n1:"00:39:29"},
+  nota:"ℹ️ Normalização pós-Festival. SLA N1 melhorou significativamente (39m29s).",
+  canais:[{canal:"Facebook",vol:117,pct:"46,8%"},{canal:"Instagram",vol:102,pct:"40,8%"},{canal:"TikTok",vol:18,pct:"7,2%"},{canal:"YouTube",vol:10,pct:"4,0%"},{canal:"Google Play",vol:3,pct:"1,2%"}],
+  origem:[{tipo:"Owned Media",vol:229,pct:"91,6%"},{tipo:"Earned Media",vol:21,pct:"8,4%"}],
+  assuntos:[{nome:"Receitas",neg:2,neu:5,pos:47,total:54},{nome:"Marca Própria",neg:5,neu:4,pos:38,total:47},{nome:"Eventos/Causas",neg:4,neu:4,pos:39,total:47},{nome:"Serviços Cliente",neg:12,neu:4,pos:7,total:23},{nome:"Entregas Online",neg:12,neu:3,pos:6,total:21}],
+  neg3:[{motivo:"Serviços ao Cliente",pct:"17%",vol:12,expl:"Retoma do padrão habitual de atendimento presencial — comentários sobre falta de resposta e resolução de pedidos em aberto."},{motivo:"Continente Online — Site",pct:"14%",vol:10,expl:"Comentários sobre erros na app, lentidão do website e dificuldades no processo de login e encomenda."},{motivo:"Entregas Online",pct:"14%",vol:10,expl:"Atrasos e falta de comunicação no estado das encomendas — padrão recorrente ao longo do período."}],
+  piorMotivo:{titulo:"Continente Online — Site e Entregas",expl:"Continente Online concentra 28% dos negativos combinados (Site + Entregas): erros técnicos na plataforma e fricções nas entregas. Padrão persistente desde a semana 1."},
+  pos3:[{motivo:"Receitas",pct:"25%",expl:"Conteúdo culinário em destaque — receitas de Verão com produtos Continente geraram forte adesão nos comentários."},{motivo:"Marca Própria",pct:"21%",expl:"Elogios a produtos de marca própria — gelados, congelados e novidades com satisfação elevada.",tooltip:"Marca Própria: linha de produtos com o rótulo do próprio retalhista."},{motivo:"Eventos e Causas",pct:"21%",expl:"Eventos locais e causas — engajamento positivo distribuído."}],
+  topPost:{rede:"Facebook",tema:"Menu semanal — receitas frescas de Verão",eng:"2.685 curtidas",analise:"88 partilhas, 65 comentários. Maior post Owned por curtidas. Classificação: Positivo.",tipo:"Owned",url:"https://facebook.com/1477995864370099"},
+  alerta:{ativo:true,msg:"ℹ️ Continente Online concentra 28% dos negativos (Site + Entregas) — padrão recorrente que requer acompanhamento."},
+  leituraPos:["Normalização pós-Festival com sentimento positivo preservado (73,6%) — Receitas e Marca Própria lideram os positivos, com comentários sobre qualidade dos produtos e experiência de compra.","SLA N1 melhorou significativamente (39m29s, −12m vs. semana anterior) — melhoria na resolução de nível 1."],
+  leituraNeg:["Continente Online (Site + Entregas) concentra 28% dos negativos — comentários sobre erros técnicos, lentidão da plataforma e atrasos de entrega. Padrão presente desde a semana 1.","SLA Total atingiu o pico máximo do período (1h20m) — ainda dentro do objetivo contratado (4h), mas merece acompanhamento no contexto de normalização de volume."]
+},
+sl:{
+  ownedEarned:{owned:{vol:1896,pct:"56,9%",desc:"Canais oficiais"},earned:{vol:1434,pct:"43,1%",desc:"UGC, menções espontâneas, imprensa"},uni:"Owned (1.896) + Earned (1.434) = 3.330 menções"},
+  kpis:{volTotal:"3.330",nssNaoComp:"+38,2",volVar:"▼ −71,0% vs. sem. anterior",volDir:"down",sov:"32,93%",sovVar:"▼ −19,0 p.p.",sovDir:"down",nss:"+10,6",nssVar:"▼ −14,8 p.",nssDir:"down"},
+  kpisNota:"",
+  sentimento:{pos:{vol:1853,pct:"55,6%"},neu:{vol:896,pct:"26,9%"},neg:{vol:581,pct:"17,4%"},uni:"Sentimento sobre volume total não comparável (3.330). NSS não comparável = +38,2."},
+  redes:[{r:"Facebook",v:1594,p:"47,9%"},{r:"Instagram",v:1313,p:"39,4%"},{r:"TikTok",v:238,p:"7,1%"},{r:"Notícias",v:140,p:"4,2%"},{r:"YouTube",v:24,p:"0,7%"},{r:"Blogs",v:12,p:"0,4%"},{r:"Fóruns",v:9,p:"0,3%"}],
+  engPos:{post:"'Don't walk, run até ao Continente' — queijo & alho (TikTok Earned)",eng:"4.979 curtidas",mot:"944 partilhas, 58 comentários. UGC espontâneo. Classificação Buzzmonitor: Positivo.",url:"https://www.tiktok.com/@/video/7666119064095395104"},
+  engNeg:{post:"Post ambiental — sentimento misto (FB)",eng:"2.098 curtidas",mot:"'Pena os micro plásticos' — reações polarizadas. Classificação Buzzmonitor: Negativo/Misto.",url:"https://facebook.com/1443207781175001"},
+  engAnalise:"Semana de transição pós-Festival — TikTok Earned emergiu como canal de UGC positivo com hauls e descobertas de produtos.",
+  destaque:"Das 3.330 menções não comparáveis, 55,6% foram positivas e 17,4% negativas — NSS não comparável de +38,2. Facebook (47,9%) e Instagram (39,4%) dominaram o volume. TikTok Earned em destaque com UGC de hauls e produtos de Verão. Earned media representa 43,1% do total — presença orgânica mantida após o pico do Festival.",
+  topPosts:[{rede:"TikTok",tema:"'Don't walk, run até ao Continente' — queijo & alho",eng:"4.979 curtidas",analise:"944 partilhas, 58 comentários. Maior Earned. Classificação: Positivo.",tipo:"Earned",url:"https://www.tiktok.com/@/video/7666119064095395104"},{rede:"TikTok",tema:"Gelados congelador — POV haul de Verão",eng:"4.376 curtidas",analise:"1.371 partilhas, 67 comentários. Classificação: Positivo.",tipo:"Earned",url:"https://www.tiktok.com/@/video/7665305550560840993"},{rede:"Facebook",tema:"Menu semanal — receitas frescas de Verão",eng:"2.685 curtidas",analise:"88 partilhas, 65 comentários. Classificação: Positivo.",tipo:"Owned",url:"https://facebook.com/1477995864370099"}],
+  verbatims:[{txt:"onde comprei cada um: cachorro: @Continente 🥰 — haul de produtos variados",autor:"alexandrrrrrrrrr_",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7663981413624073504",comments:136},{txt:"JÁ NÃO AGUENTO MAIS O MIGUEL @mike #foodtok #tastetest #humor #foryourpage #portugal",autor:"alexandrrrrrrrrr_",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7665070972701003040",comments:140},{txt:"Ovo surpresa para os nossos doguinhos 🐾 #joytoy #dog #dicas #compras #fyp @Continente",autor:"miriamtormenta",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7666172219139034401",comments:34},{txt:"#CapCut @Continente #fyp #Portugal #tuga",autor:"simao_5m",rede:"TikTok",cat:"Comentário",url:"https://www.tiktok.com/@/video/7665635670366489888",comments:488}],
+  sov:{total:5804,marcas:[{m:"Continente",v:1911,p:"32,93%"},{m:"Pingo Doce",v:1590,p:"27,39%"},{m:"Lidl",v:1502,p:"25,88%"},{m:"Mercadona",v:499,p:"8,60%"},{m:"Auchan",v:302,p:"5,20%"}]},
+  benchNSS:[{m:"Pingo Doce",nss:31.6},{m:"Mercadona",nss:13.8},{m:"Auchan",nss:11.9},{m:"Continente",nss:10.6},{m:"Lidl",nss:-6.5}],
+  redesMarca:[{marca:"Continente",canais:[{c:"Facebook",v:1594,p:"83,4%"},{c:"Notícias",v:140,p:"7,3%"},{c:"Instagram",v:135,p:"7,1%"},{c:"YouTube",v:24,p:"1,3%"},{c:"Blogs",v:12,p:"0,6%"},{c:"Fóruns",v:6,p:"0,3%"}],total:1911,nota:"Instagram comparável (posts/reels) estimado para semanas anteriores."},{marca:"Pingo Doce",canais:[{c:"Facebook",v:1283,p:"80,7%"},{c:"X (Twitter)",v:127,p:"8,0%"},{c:"Instagram",v:118,p:"7,4%"},{c:"Notícias",v:52,p:"3,3%"},{c:"Blogs",v:10,p:"0,6%"}],total:1590},{marca:"Lidl",canais:[{c:"Facebook",v:1218,p:"81,1%"},{c:"X (Twitter)",v:142,p:"9,5%"},{c:"Instagram",v:79,p:"5,3%"},{c:"Notícias",v:52,p:"3,5%"},{c:"Blogs",v:11,p:"0,7%"}],total:1502},{marca:"Mercadona",canais:[{c:"Facebook",v:388,p:"77,8%"},{c:"X (Twitter)",v:72,p:"14,4%"},{c:"Notícias",v:22,p:"4,4%"},{c:"Instagram",v:13,p:"2,6%"},{c:"Blogs",v:4,p:"0,8%"}],total:499},{marca:"Auchan",canais:[{c:"Facebook",v:249,p:"82,5%"},{c:"X (Twitter)",v:22,p:"7,3%"},{c:"Instagram",v:17,p:"5,6%"},{c:"Notícias",v:12,p:"4,0%"},{c:"Outros",v:2,p:"0,7%"}],total:302}],
+  temas:[{marca:"Pingo Doce",cor:"#0A6B3B",tema:"Boda de Berlim — viral",posPost:"Boda de Berlim (IG Reel)",posEng:"9.691 curtidas",posMot:"Post viral — maior post do setor esta semana.",posUrl:"https://www.instagram.com/reel/DbF8VYKFtSR/",negPost:"Post ambiental misto (FB)",negEng:"2.098 curtidas",negMot:"Debate nos comentários.",negUrl:"https://facebook.com/1443207781175001",analise:"Pingo Doce lidera SOV (27,05%) e NSS (+31,6) — Boda de Berlim viral.",destaque:"Melhor NSS (+31,6)."},{marca:"Lidl",cor:"#0050A0",tema:"Mini pães com chouriço — preço acessível",posPost:"Mini Pães com Chouriço a 2,49€ (FB)",posEng:"5.051 curtidas",posMot:"Produto popular a preço acessível.",posUrl:"https://facebook.com/1466518638852197",negPost:"Sem post negativo de destaque",negEng:"—",negMot:"NSS −6,5 disperso.",negUrl:"",analise:"NSS −6,5 e 26,2% SOV.",destaque:"Volume próximo do líder, NSS negativo (−6,5)."},{marca:"Mercadona",cor:"#F58220",tema:"Produto capilar — caracóis definidos",posPost:"Caracóis mais definidos e flexíveis (FB)",posEng:"1.101 curtidas",posMot:"Adesão moderada.",posUrl:"https://facebook.com/1332430709068951",negPost:"Sentimento positivo — melhor semana",negEng:"—",negMot:"NSS +13,8.",negUrl:"",analise:"NSS +13,8 — melhor semana da Mercadona.",destaque:"NSS positivo (+13,8)."},{marca:"Auchan",cor:"#7C3AED",tema:"Doce de leite & campanha sazonal",posPost:"Doce de leite sempre bem-vindo (FB)",posEng:"1.728 curtidas",posMot:"Boa receção.",posUrl:"https://facebook.com/1460282849477690",negPost:"Sem post negativo",negEng:"—",negMot:"Sentimento positivo.",negUrl:"",analise:"NSS +11,9 e 5,2% SOV.",destaque:"NSS positivo (+11,9)."}],
+  movimentos:[{titulo:"Síntese competitiva — 18–24 Jul 2026",texto:"O Pingo Doce lidera SOV e NSS — Boda de Berlim (9.691 curtidas) foi o maior post do setor. O Continente cede liderança (32,64% vs. 27,05% PD) mas mantém NSS +10,6. O Lidl NSS negativo (−6,5). A Mercadona teve a sua melhor semana (+13,8). O Auchan estável (+11,9)."}]
+}};
+
+const DADOS_W4={meta:{semana:"25-31 de Julho de 2026"},
+crm:{
+  sentimento:[{tipo:"Positivo",vol:350,pct:"78,7%",var:"▲ +5,1 p.p. vs. sem. anterior",cor:"verde"},{tipo:"Neutro",vol:38,pct:"8,5%",var:"▼ −1,1 p.p.",cor:"ambar"},{tipo:"Negativo",vol:57,pct:"12,8%",var:"▼ −4,0 p.p.",cor:"vermelho"}],
+  kpis:{total:445,varTotal:"▲ +78% vs. sem. anterior",sla:"00:43:39",slaVar:"▼ Melhoria expressiva vs. sem. anterior",n1:"00:37:43"},
+  nota:"ℹ️ SLA Total melhora expressivamente (43m39s). Novidade de Marca Própria domina os positivos.",
+  canais:[{canal:"Facebook",vol:249,pct:"56,0%"},{canal:"Instagram",vol:155,pct:"34,8%"},{canal:"TikTok",vol:35,pct:"7,9%"},{canal:"YouTube",vol:5,pct:"1,1%"},{canal:"Google Play",vol:1,pct:"0,2%"}],
+  origem:[{tipo:"Owned Media",vol:424,pct:"95,3%"},{tipo:"Earned Media",vol:21,pct:"4,7%"}],
+  assuntos:[{nome:"Marca Própria",neg:8,neu:5,pos:180,total:193},{nome:"Receitas",neg:3,neu:4,pos:62,total:69},{nome:"Eventos/Causas",neg:5,neu:6,pos:43,total:54},{nome:"Entregas Online",neg:36,neu:6,pos:4,total:46},{nome:"Disponibilidade",neg:23,neu:5,pos:2,total:30}],
+  neg3:[{motivo:"Entregas Online",pct:"25%",vol:36,expl:"Comentários sobre atrasos, falta de informação de rastreamento e comunicação de entrega — pico do período em peso relativo. Alta procura de novidade de produto intensificou o volume de encomendas online."},{motivo:"Disponibilidade de produto",pct:"16%",vol:23,expl:"Comentários sobre indisponibilidade em loja — stock insuficiente para a procura gerada pela novidade de Marca Própria."},{motivo:"Serviços ao Cliente",pct:"11%",vol:16,expl:"Questões gerais de atendimento presencial e online."}],
+  piorMotivo:{titulo:"Entregas Online",expl:"Pico do período em peso relativo (25% dos negativos) — comentários sobre atrasos, rastreamento deficiente e falta de comunicação. Alta procura de novidade de Marca Própria intensificou o volume de encomendas."},
+  pos3:[{motivo:"Marca Própria",pct:"40%",expl:"Novidade de Marca Própria em destaque — elogios ao produto, partilha de experiências de compra e pedidos de mais sabores nos comentários.",tooltip:"Marca Própria: linha de produtos com o rótulo do próprio retalhista."},{motivo:"Receitas",pct:"15%",expl:"Conteúdo culinário com forte adesão — laranjas geladas e gelados em destaque."},{motivo:"Eventos e Causas",pct:"10%",expl:"Dia dos Avós e iniciativas sazonais — forte conexão emocional nos comentários."}],
+  topPost:{rede:"Facebook",tema:"Gelados — sabores únicos com recheio",eng:"5.063 curtidas",analise:"150 partilhas, 207 comentários. Maior Owned por curtidas. Classificação: Positivo.",tipo:"Owned",url:"https://facebook.com/1484227233746962"},
+  alerta:{ativo:true,msg:"ℹ️ Entregas Online (25%) e Disponibilidade (16%) — pico combinado. SLA Total melhorou expressivamente (43m39s, −37m vs. sem. anterior)."},
+  leituraPos:["Marca Própria domina os positivos (40%) — novidade de produto com forte adesão: comentários entusiastas, pedidos de mais sabores e partilha de experiências. Maior semana positiva de Marca Própria no período.","SLA Total melhorou expressivamente (43m39s, −37m vs. semana anterior) — melhor SLA Total desde a semana 1."],
+  leituraNeg:["Entregas Online atinge pico relativo do período (25%) — comentários sobre atrasos e comunicação deficiente. O aumento de encomendas online gerou maior pressão no processo de entrega.","Disponibilidade em loja (16%) — comentários sobre stock esgotado da novidade de Marca Própria, pedidos de reposição urgente."]
+},
+sl:{
+  ownedEarned:{owned:{vol:2428,pct:"58,8%",desc:"Canais oficiais"},earned:{vol:1701,pct:"41,2%",desc:"UGC, menções espontâneas, imprensa"},uni:"Owned (2.428) + Earned (1.701) = 4.129 menções"},
+  kpis:{volTotal:"4.129",nssNaoComp:"+37,6",volVar:"▲ +24,0% vs. sem. anterior",volDir:"up",sov:"31,94%",sovVar:"▼ −0,9 p.p.",sovDir:"down",nss:"+47,4",nssVar:"▲ +36,8 p. (NSS corrigido)",nssDir:"up"},
+  kpisNota:"ℹ️ NSS comparável corrigido com dados validados (Pos=300, Neg=107, Total=407) — substituiu valor anterior.",
+  sentimento:{pos:{vol:2349,pct:"56,9%"},neu:{vol:982,pct:"23,8%"},neg:{vol:798,pct:"19,3%"},uni:"Sentimento sobre volume total não comparável (4.129). NSS não comparável = +37,6."},
+  redes:[{r:"Instagram",v:1923,p:"46,6%"},{r:"Facebook",v:1810,p:"43,8%"},{r:"TikTok",v:237,p:"5,7%"},{r:"Notícias",v:139,p:"3,4%"},{r:"YouTube",v:9,p:"0,2%"},{r:"Blogs",v:7,p:"0,2%"},{r:"Fóruns",v:4,p:"0,1%"}],
+  engPos:{post:"Laranjas geladas — fruta Continente (TikTok Earned)",eng:"5.748 curtidas",mot:"1.662 partilhas, 128 comentários. Maior Earned da semana. Classificação Buzzmonitor: Positivo.",url:"https://www.tiktok.com/@/video/7667908339048664352"},
+  engNeg:{post:"Novidade Marca Própria — publicação mista (IG)",eng:"3.973 curtidas",mot:"12.077 partilhas, 275 comentários. Mix de elogios e críticas. Classificação Buzzmonitor: Negativo/Misto.",url:"https://www.instagram.com/reel/DbVbvn3jMQw/"},
+  engAnalise:"Novidade de Marca Própria dominou o buzz — enorme adesão positiva com UGC espontâneo e debate nos comentários.",
+  destaque:"Das 4.129 menções não comparáveis, 56,9% foram positivas — NSS não comparável de +37,6. Instagram (46,6%) e Facebook (43,8%) distribuíram equitativamente o volume. Earned media em 41,2%, impulsionado por UGC espontâneo da novidade de Marca Própria. A publicação da novidade gerou 12.077 partilhas — maior em partilhas do período.",
+  topPosts:[{rede:"TikTok",tema:"Laranjas geladas — fruta de Verão",eng:"5.748 curtidas",analise:"1.662 partilhas, 128 comentários. Maior Earned. Classificação: Positivo.",tipo:"Earned",url:"https://www.tiktok.com/@/video/7667908339048664352"},{rede:"Facebook",tema:"Gelados — sabores únicos com recheio",eng:"5.063 curtidas",analise:"150 partilhas, 207 comentários. Maior Owned. Classificação: Positivo.",tipo:"Owned",url:"https://facebook.com/1484227233746962"},{rede:"Instagram",tema:"Novidade Marca Própria — chegaram às lojas!",eng:"3.973 curtidas",analise:"12.077 partilhas, 275 comentários, 271.371 views. Maior em partilhas do período. Classificação: Negativo/Misto.",tipo:"Owned",url:"https://www.instagram.com/reel/DbVbvn3jMQw/"}],
+  verbatims:[{txt:"💖 Dica da Gabi — o @Continente lançou dois novos sabores de pães de queijo 🥓 e 🍫 cacau com avelã!",autor:"gabidesmolins",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7667902268888354080",comments:38},{txt:"Vi esta receita no TikTok e, claro… tive de lhe dar o meu toque! 🤤 Croissant + produtos Continente",autor:"justelisae",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7668698782892150049",comments:157},{txt:"(PARTE 1) 178.78€ no total. Levei em consideração as dicas e fui ao @Continente",autor:"lilianacgomes",rede:"TikTok",cat:"Comentário",url:"https://www.tiktok.com/@/video/7667319400915111201",comments:29},{txt:"Isto significa que as minhas papas de aveia vão saber a pistácio? Por mim é pistácio em tudo 🥜",autor:"marianag0mes_",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7668294836977437985",comments:33}],
+  sov:{total:6641,marcas:[{m:"Pingo Doce",v:2641,p:"39,77%"},{m:"Continente",v:2121,p:"31,94%"},{m:"Lidl",v:1122,p:"16,90%"},{m:"Mercadona",v:557,p:"8,39%"},{m:"Auchan",v:200,p:"3,01%"}]},
+  benchNSS:[{m:"Pingo Doce",nss:77.5},{m:"Auchan",nss:56.2},{m:"Continente",nss:47.4},{m:"Lidl",nss:7.1},{m:"Mercadona",nss:-24.0}],
+  redesMarca:[{marca:"Continente",canais:[{c:"Facebook",v:1810,p:"85,3%"},{c:"Instagram",v:153,p:"7,2%"},{c:"Notícias",v:139,p:"6,6%"},{c:"YouTube",v:9,p:"0,4%"},{c:"Blogs",v:7,p:"0,3%"},{c:"Fóruns",v:3,p:"0,1%"}],total:2121,nota:"Instagram comparável (posts/reels) estimado para semanas anteriores."},{marca:"Pingo Doce",canais:[{c:"Facebook",v:2138,p:"81,0%"},{c:"X (Twitter)",v:241,p:"9,1%"},{c:"Instagram",v:197,p:"7,5%"},{c:"Notícias",v:55,p:"2,1%"},{c:"Blogs",v:10,p:"0,4%"}],total:2641},{marca:"Lidl",canais:[{c:"Facebook",v:902,p:"80,4%"},{c:"X (Twitter)",v:112,p:"10,0%"},{c:"Instagram",v:59,p:"5,3%"},{c:"Notícias",v:43,p:"3,8%"},{c:"Blogs",v:6,p:"0,5%"}],total:1122},{marca:"Mercadona",canais:[{c:"Facebook",v:449,p:"80,6%"},{c:"X (Twitter)",v:68,p:"12,2%"},{c:"Notícias",v:21,p:"3,8%"},{c:"Instagram",v:15,p:"2,7%"},{c:"Blogs",v:4,p:"0,7%"}],total:557},{marca:"Auchan",canais:[{c:"Facebook",v:167,p:"83,5%"},{c:"X (Twitter)",v:14,p:"7,0%"},{c:"Instagram",v:12,p:"6,0%"},{c:"Notícias",v:7,p:"3,5%"}],total:200}],
+  temas:[{marca:"Pingo Doce",cor:"#0A6B3B",tema:"Boda de Berlim — 2.ª semana viral",posPost:"Boda de Berlim (FB)",posEng:"5.722 curtidas",posMot:"574 comentários, 1.050 partilhas. 2.ª semana viral.",posUrl:"https://facebook.com/1450308350464944",negPost:"Última fatia — misto (IG)",negEng:"1.703 curtidas",negMot:"Reações mistas.",negUrl:"https://www.instagram.com/p/DbbJSioDcyT/",analise:"Pingo Doce lidera SOV (39,4%) e NSS (+77,5).",destaque:"Maior NSS (+77,5) e volume."},{marca:"Lidl",cor:"#0050A0",tema:"'A este preço, também escusas de as plantar'",posPost:"A este preço, também escusas de as plantar (FB)",posEng:"6.962 curtidas",posMot:"Maior post individual da concorrência esta semana.",posUrl:"https://facebook.com/1473672621470132",negPost:"Sem post negativo",negEng:"—",negMot:"NSS +7,1.",negUrl:"",analise:"NSS +7,1 — melhor semana do Lidl.",destaque:"Maior post individual (6.962 curtidas) · NSS +7,1."},{marca:"Mercadona",cor:"#F58220",tema:"Produto de limpeza multiusos",posPost:"Um só produto, três formas de limpeza (FB)",posEng:"1.626 curtidas",posMot:"Boa adesão.",posUrl:"https://facebook.com/1339613865017302",negPost:"Sem destaque",negEng:"—",negMot:"NSS −24,0.",negUrl:"",analise:"NSS −24,0.",destaque:"NSS negativo (−24,0)."},{marca:"Auchan",cor:"#7C3AED",tema:"Gama para animais de estimação",posPost:"Como todas as divas, a Quinoa sabe bem o que quer (FB)",posEng:"2.052 curtidas",posMot:"Campanha de animais com forte receção.",posUrl:"https://facebook.com/1462798642559444",negPost:"Sem destaque",negEng:"—",negMot:"NSS +56,2.",negUrl:"",analise:"NSS +56,2 — 2.º melhor do setor.",destaque:"NSS +56,2 — 2.º melhor."}],
+  movimentos:[{titulo:"Síntese competitiva — 25–31 Jul 2026",texto:"O Pingo Doce domina com SOV 39,4% e NSS +77,5 — Boda de Berlim pela 2.ª semana. O Continente em 2.º (31,7%) com NSS +47,4 (corrigido). O Auchan com 2.º melhor NSS (+56,2). O Lidl com maior post individual (6.962 curtidas) e NSS +7,1. A Mercadona no negativo (−24,0)."}]
+}};
+
+const DADOS_W5={meta:{semana:"01-07 de Agosto de 2026"},
+crm:{
+  sentimento:[{tipo:"Positivo",vol:323,pct:"76,4%",var:"▼ −2,3 p.p. vs. sem. anterior",cor:"verde"},{tipo:"Neutro",vol:35,pct:"8,3%",var:"▼ −0,2 p.p.",cor:"ambar"},{tipo:"Negativo",vol:65,pct:"15,4%",var:"▲ +2,6 p.p.",cor:"vermelho"}],
+  kpis:{total:423,varTotal:"▼ −5% vs. sem. anterior",sla:"00:31:49",slaVar:"▼ Melhor SLA Total do período",n1:"00:36:26"},
+  nota:"ℹ️ Melhor SLA Total do período (31m49s). Entregas Online com pico absoluto (31% dos negativos).",
+  canais:[{canal:"Facebook",vol:278,pct:"65,7%"},{canal:"Instagram",vol:91,pct:"21,5%"},{canal:"TikTok",vol:50,pct:"11,8%"},{canal:"YouTube",vol:4,pct:"0,9%"}],
+  origem:[{tipo:"Owned Media",vol:401,pct:"94,8%"},{tipo:"Earned Media",vol:22,pct:"5,2%"}],
+  assuntos:[{nome:"Engagement",neg:66,neu:144,pos:711,total:921},{nome:"Marca Própria",neg:37,neu:24,pos:184,total:245},{nome:"Produtos",neg:19,neu:27,pos:181,total:227},{nome:"Passatempo",neg:1,neu:62,pos:0,total:63},{nome:"Receitas",neg:null,neu:null,pos:null,total:95,semDetalhe:true}],
+  neg3:[{motivo:"Entregas Online",pct:"31%",vol:20,expl:"Pico absoluto do período — comentários sobre atrasos, falta de atualização do rastreamento e falha na comunicação de entrega. Volume de encomendas online elevado nesta semana."},{motivo:"Cupões de desconto",pct:"8%",vol:5,expl:"Comentários sobre cupões não aplicados corretamente, validade expirada e problemas na plataforma de desconto."},{motivo:"Frescos",pct:"8%",vol:5,expl:"Comentários sobre qualidade e disponibilidade de frescos específicos — uvas e marisco mencionados."}],
+  piorMotivo:{titulo:"Entregas Online",expl:"Pico absoluto do período (31% dos negativos, 20 ocorrências) — comentários sobre atrasos, falta de rastreamento e comunicação de entrega. Requer acompanhamento do processo de entrega online."},
+  pos3:[{motivo:"Marca Própria",pct:"17%",vol:54,expl:"Elogios a produtos de marca própria — beleza, frescos e novidades de Verão nos comentários.",tooltip:"Marca Própria: linha de produtos com o rótulo do próprio retalhista."},{motivo:"Frescos",pct:"14%",vol:45,expl:"Elogios a frescos premium — uvas sem grainha, espetadas de peixe e marisco com alta satisfação."},{motivo:"Produtos não alimentares",pct:"13%",vol:43,expl:"Satisfação com artigos não alimentares — bagagem de cabine e produtos de Verão nos comentários."}],
+  topPost:{rede:"Facebook",tema:"Uvas sem grainha — frescos premium de Verão",eng:"4.458 curtidas",analise:"96 partilhas, 164 comentários. Maior Owned por curtidas. Classificação: Positivo.",tipo:"Owned",url:"https://facebook.com/1493319469504405"},
+  alerta:{ativo:true,msg:"ℹ️ Entregas Online: pico absoluto do período (31% dos negativos) — acompanhamento do processo de entrega online recomendado."},
+  leituraPos:["Melhor SLA Total do período (31m49s) — melhoria operacional consistente ao longo das últimas semanas. Frescos premium (uvas sem grainha, marisco) e Marca Própria continuam a gerar satisfação nos comentários.","Facebook foi o canal dominante (278 interações, 65,7%) — maioritariamente interações positivas em publicações de produto fresco e marca própria."],
+  leituraNeg:["Entregas Online atinge pico absoluto do período (31% dos negativos, 20 ocorrências) — comentários sobre atrasos e falta de rastreamento. Requer revisão do processo de comunicação de entrega.","SLA N1 (36m26s) ligeiramente superior ao SLA Total (31m49s) — padrão atípico a verificar com a equipa de dados CRM."]
+},
+sl:{
+  ownedEarned:{owned:{vol:3377,pct:"65,1%",desc:"Canais oficiais"},earned:{vol:1814,pct:"34,9%",desc:"Menções espontâneas, imprensa, UGC"},uni:"Owned (3.377) + Earned (1.814) = 5.191 menções"},
+  kpis:{volTotal:"5.191",nssNaoComp:"+22,7",volVar:"▲ +25,7% vs. sem. anterior",volDir:"up",sov:"27,27%",sovVar:"▼ −4,5 p.p. — Lidl lidera",sovDir:"down",nss:"+62,6",nssVar:"▲ +15,2 p.",nssDir:"up"},
+  kpisNota:"ℹ️ Diferença de 3 menções entre o volume total (5.191) e a distribuição por rede (5.188) — divergência de classificação na fonte; será corrigida na próxima atualização.",
+  sentimento:{pos:{vol:2487,pct:"47,91%"},neu:{vol:1416,pct:"27,28%"},neg:{vol:1288,pct:"24,81%"},uni:"Sentimento sobre 5.191 menções. NSS não comparável = +22,7."},
+  redes:[{r:"Facebook",v:3082,p:"59,4%"},{r:"Instagram",v:1499,p:"28,9%"},{r:"TikTok",v:431,p:"8,3%"},{r:"Notícias",v:154,p:"3,0%"},{r:"YouTube",v:10,p:"0,2%"},{r:"Blogs",v:8,p:"0,2%"},{r:"Fóruns",v:4,p:"0,1%"}],
+  engPos:{post:"Uvas sem grainha — frescos premium (FB)",eng:"4.458 curtidas",mot:"96 partilhas, 164 comentários. Maior Owned por curtidas. Classificação Buzzmonitor: Positivo.",url:"https://facebook.com/1493319469504405"},
+  engNeg:{post:"Gama de beleza — publicação mista (FB)",eng:"3.211 curtidas",mot:"81 partilhas, 142 comentários. Maioria positiva, com debate. Classificação Buzzmonitor: Negativo/Misto.",url:"https://facebook.com/1487774086725610"},
+  engAnalise:"Facebook voltou a ser o canal dominante (59,4%). NSS não comparável de +22,7, com sentimento mais dividido do que nas semanas anteriores.",
+  destaque:"Das 5.191 menções não comparáveis, 47,9% foram positivas e 24,8% negativas — NSS não comparável de +22,7. Facebook concentrou 59,4% do volume. TikTok registou forte presença de UGC espontâneo sobre lançamentos (Oreo BTS). Earned media em 34,9%, com tendência de concentração no owned face às semanas anteriores.",
+  topPosts:[{rede:"Facebook",tema:"Uvas sem grainha — frescos premium",eng:"4.458 curtidas",analise:"96 partilhas, 164 comentários. Classificação: Positivo.",tipo:"Owned",url:"https://facebook.com/1493319469504405"},{rede:"Facebook",tema:"Gama de beleza — hidratação e luminosidade",eng:"3.211 curtidas",analise:"81 partilhas, 142 comentários. Classificação: Negativo/Misto.",tipo:"Owned",url:"https://facebook.com/1487774086725610"},{rede:"TikTok",tema:"Mochila de viagem — a companheira que nunca falha",eng:"2.938 curtidas",analise:"1.051 partilhas, 14 comentários. Maior em partilhas. Classificação: Positivo.",tipo:"Owned",url:"https://www.tiktok.com/@/video/7670938915871706401"}],
+  verbatims:[{txt:"MISSÃO BEM-SUCEDIDA ✨🥳💜 @BTS @OREO @Continente encontrei as Oreos do BTS! #BTS #btsportugal",autor:"rkivebynini",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7669516853689208067",comments:291},{txt:"O @Continente antecipou a chegada do @OREO do BTS!!!! Corram!!!!! Peguei 5 pacotes",autor:"rafahobbies1",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7669268816429468935",comments:190},{txt:"vamos testar as oreos dos bts!! chegaram ao continente @Continente #fyp #bts #kpopportugal",autor:"sofia_coelho05",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7669078637404015894",comments:94},{txt:"especialmente as minhas Dean Di Laurentis girls ✨ estão a 19,30€ 👀 @Continente #continente",autor:"mafsdossantos",rede:"TikTok",cat:"Comentário",url:"https://www.tiktok.com/@/video/7669836432978070817",comments:75}],
+  sov:{total:2824,marcas:[{m:"Lidl",v:1086,p:"38,46%"},{m:"Continente",v:770,p:"27,27%"},{m:"Pingo Doce",v:664,p:"23,51%"},{m:"Mercadona",v:236,p:"8,36%"},{m:"Auchan",v:68,p:"2,41%"}]},
+  benchNSS:[{m:"Continente",nss:62.6},{m:"Pingo Doce",nss:56.2},{m:"Lidl",nss:22.1},{m:"Mercadona",nss:-21.4},{m:"Auchan",nss:-52.4}],
+  redesMarca:[{marca:"Continente",canais:[{c:"Facebook",v:548,p:"71,2%"},{c:"Notícias",v:154,p:"20,0%"},{c:"Instagram",v:46,p:"6,0%"},{c:"YouTube",v:10,p:"1,3%"},{c:"Blogs",v:8,p:"1,0%"},{c:"Fóruns",v:4,p:"0,5%"}],total:770,nota:"Instagram comparável (posts/reels) estimado para semanas anteriores."},{marca:"Lidl",canais:[{c:"Facebook",v:910,p:"83,8%"},{c:"X (Twitter)",v:82,p:"7,6%"},{c:"Instagram",v:59,p:"5,4%"},{c:"Notícias",v:27,p:"2,5%"},{c:"Blogs",v:8,p:"0,7%"}],total:1086},{marca:"Pingo Doce",canais:[{c:"Facebook",v:514,p:"77,4%"},{c:"X (Twitter)",v:71,p:"10,7%"},{c:"Instagram",v:47,p:"7,1%"},{c:"Notícias",v:25,p:"3,8%"},{c:"Blogs",v:7,p:"1,1%"}],total:664},{marca:"Mercadona",canais:[{c:"Facebook",v:187,p:"79,2%"},{c:"X (Twitter)",v:32,p:"13,6%"},{c:"Notícias",v:9,p:"3,8%"},{c:"Instagram",v:6,p:"2,5%"},{c:"Blogs",v:2,p:"0,8%"}],total:236},{marca:"Auchan",canais:[{c:"Facebook",v:52,p:"76,5%"},{c:"X (Twitter)",v:8,p:"11,8%"},{c:"Notícias",v:4,p:"5,9%"},{c:"Instagram",v:4,p:"5,9%"}],total:68}],
+  temas:[{marca:"Lidl",cor:"#0050A0",tema:"'Efeitos secundários: estranhos cheirarem-te o pescoço'",posPost:"Efeitos secundários incluem: estranhos cheirarem-te o pescoço (FB)",posEng:"6.153 curtidas",posMot:"Post humorístico — maior post do Lidl da semana.",posUrl:"https://facebook.com/1479115770925817",negPost:"Mesmo post — sentimento positivo dominante",negEng:"—",negMot:"NSS +22,1.",negUrl:"",analise:"Lidl NSS +22,1 — melhor semana de sentimento do período.",destaque:"NSS +22,1 — melhor semana do Lidl."},{marca:"Pingo Doce",cor:"#0A6B3B",tema:"'Suspeito identificado' — maior post da concorrência no período",posPost:"Suspeito identificado (FB)",posEng:"11.189 curtidas",posMot:"Maior post da concorrência no período completo.",posUrl:"https://facebook.com/1457598193069293",negPost:"Não vale copiar — misto (IG)",negEng:"770 curtidas",negMot:"Reações mistas.",negUrl:"https://www.instagram.com/p/DbskLpKDVSH/",analise:"Pingo Doce NSS +56,2 e 23,2% SOV.",destaque:"Maior post da concorrência no período (11.189 curtidas)."},{marca:"Mercadona",cor:"#F58220",tema:"Notícia negativa sobre práticas laborais",posPost:"Doce ou salgado? Não tem de escolher (FB)",posEng:"1.587 curtidas",posMot:"Único destaque positivo da semana.",posUrl:"https://facebook.com/1344605291184826",negPost:"Notícia sobre prática laboral (FB)",negEng:"1.273 curtidas",negMot:"Forte indignação pública — impactou o NSS.",negUrl:"https://facebook.com/1656880029811914",analise:"Mercadona NSS −21,4 — notícia negativa dominou.",destaque:"Pior NSS (−21,4) — semana difícil."},{marca:"Auchan",cor:"#7C3AED",tema:"Abertura Auchan Marco de Canaveses",posPost:"Abertura Marco de Canaveses — sandes de praia (FB)",posEng:"2.141 curtidas",posMot:"Abertura de nova loja.",posUrl:"https://facebook.com/1470018398504135",negPost:"Pré-abertura — misto (FB)",negEng:"88 curtidas",negMot:"Debate sobre impacto no comércio local.",negUrl:"https://facebook.com/1469094041929904",analise:"Auchan NSS −52,4 — atenção: apenas 42 menções classificadas (baixo volume aumenta volatilidade).",destaque:"NSS −52,4 — baixo volume (42 menções) aumenta volatilidade."}],
+  movimentos:[{titulo:"Síntese competitiva — 01–07 Ago 2026",texto:"O Lidl lidera o SOV (38,6%) e tem o seu melhor NSS do período (+22,1). O Continente sobe para 2.º no SOV (27,2%) com melhor NSS comparável do período (+62,6). O Pingo Doce lidera o NSS (+56,2) com o maior post da concorrência no período ('Suspeito identificado', 11.189 curtidas). A Mercadona com NSS −21,4 penalizada por notícia negativa sobre práticas laborais. O Auchan com NSS −52,4 — atenção ao baixo volume classificado (42 menções)."}]
+}};
+
+const DADOS_W6={meta:{semana:"08-14 de Agosto de 2026"},
+crm:{
+  sentimento:[{tipo:"Positivo",vol:310,pct:"76,4%",var:"▬ estável vs. sem. anterior",cor:"verde"},{tipo:"Neutro",vol:35,pct:"8,6%",var:"▲ +0,3 p.p.",cor:"ambar"},{tipo:"Negativo",vol:61,pct:"15,0%",var:"▼ −0,4 p.p.",cor:"vermelho"}],
+  kpis:{total:406,varTotal:"▼ −4% vs. sem. anterior",sla:"01:11:25",slaVar:"▲ Subiu vs. sem. anterior (dentro do objetivo 4h)",n1:"01:00:28"},
+  nota:"ℹ️ SLA Total 1h11m25s — dentro do objetivo contratado (4h). Sentimento muito positivo (76,4%), com Frescos e Padaria/Pastelaria a dominar os elogios.",
+  canais:[{canal:"Facebook",vol:283,pct:"69,7%"},{canal:"Instagram",vol:104,pct:"25,6%"},{canal:"TikTok",vol:12,pct:"3,0%"},{canal:"YouTube",vol:7,pct:"1,5%"}],
+  origem:[{tipo:"Owned Media",vol:391,pct:"96,3%"},{tipo:"Earned Media",vol:15,pct:"3,7%"}],
+  assuntos:[{nome:"Frescos",neg:4,neu:2,pos:96,total:102},{nome:"Disponibilidade de produto",neg:8,neu:3,pos:20,total:31},{nome:"Receitas",neg:0,neu:1,pos:23,total:24},{nome:"Produtos não alimentares",neg:5,neu:0,pos:15,total:20},{nome:"Coleções Continente",neg:6,neu:1,pos:7,total:14}],
+  neg3:[{motivo:"Disponibilidade de produto",pct:"13%",vol:8,expl:"Comentários sobre indisponibilidade em loja de artigos específicos — principal tópico negativo da semana. Padrão pontual associado a produtos de elevada procura."},{motivo:"Cupões de desconto",pct:"11%",vol:7,expl:"Comentários sobre cupões não aplicados corretamente, validade expirada e problemas na plataforma de desconto."},{motivo:"Serviços ao Cliente",pct:"11%",vol:7,expl:"Questões gerais de atendimento presencial e online — comunicação e resolução de pedidos em aberto."}],
+  piorMotivo:{titulo:"Disponibilidade de produto",expl:"Principal tópico negativo da semana (13% dos negativos, 8 ocorrências) — comentários sobre indisponibilidade em loja de artigos de elevada procura. Casos encaminhados para acompanhamento de stock."},
+  pos3:[{motivo:"Frescos",pct:"31%",vol:96,expl:"Enorme volume de elogios a frescos e padaria/pastelaria — croissants, melancias, pêssegos e novidades de Verão dominaram os positivos da semana.",tooltip:"Frescos: fruta, legumes, peixe, padaria e pastelaria."},{motivo:"Receitas",pct:"7%",vol:23,expl:"Conteúdo culinário com boa adesão — receitas de Verão e sugestões de refeição."},{motivo:"Disponibilidade de produto",pct:"6%",vol:20,expl:"Comentários positivos sobre reposição e chegada de novidades às lojas."}],
+  topPost:{rede:"TikTok",tema:"Uvas de algodão doce — novidade de Verão",eng:"1.644 curtidas",analise:"281 partilhas, 92 comentários. Maior post Owned da Continente esta semana. Classificação: Positivo.",tipo:"Owned",url:"https://www.tiktok.com/@/video/7673469366796635425"},
+  alerta:{ativo:true,msg:"ℹ️ SLA Total subiu para 1h11m25s (de 31m49s na semana anterior) — mantém-se dentro do objetivo contratado (4h), mas merece acompanhamento."},
+  leituraPos:["Frescos domina os positivos (31%) — croissants, pêssegos paraguaios, melancias e padaria/pastelaria geraram forte satisfação nos comentários. Sentimento muito positivo (76,4%).","Facebook foi o canal dominante do CRM (283 interações, 69,7%) — maioritariamente interações positivas em publicações de produto fresco e novidades."],
+  leituraNeg:["Disponibilidade de produto lidera os negativos (13%) — comentários sobre indisponibilidade em loja de artigos de elevada procura. Cupões de desconto e Serviços ao Cliente empatam em 2.º (11% cada).","SLA Total subiu para 1h11m25s vs. 31m49s da semana anterior — ainda dentro do objetivo contratado (4h). SLA N1 (1h00m28s) próximo do SLA Total."]
+},
+sl:{
+  ownedEarned:{owned:{vol:3010,pct:"64,4%",desc:"Canais oficiais — conteúdo de produto e novidades"},earned:{vol:1662,pct:"35,6%",desc:"UGC, menções espontâneas, imprensa"},uni:"Owned (3.010) + Earned (1.662) = 4.672 menções"},
+  kpis:{volTotal:"4.672",nssNaoComp:"+39,5",volVar:"▼ −10,0% vs. sem. anterior",volDir:"down",sov:"31,40%",sovVar:"▲ +4,2 p.p. — lidera SOV",sovDir:"up",nss:"+0,0",nssVar:"▼ −62,6 p. (notícia concertação de preços)",nssDir:"down"},
+  kpisNota:"",
+  sentimento:{pos:{vol:2726,pct:"58,3%"},neu:{vol:1067,pct:"22,8%"},neg:{vol:879,pct:"18,8%"},uni:"Sentimento sobre 4.672 menções. NSS não comparável = +39,5."},
+  engPos:{post:"Uvas de algodão doce — novidade de Verão (TikTok)",eng:"1.644 curtidas",mot:"281 partilhas, 92 comentários. Maior Owned da Continente esta semana. Classificação Buzzmonitor: Positivo/Neutro.",url:"https://www.tiktok.com/@/video/7673469366796635425"},
+  engNeg:{post:"Notícia — tribunal iliba insígnias no processo de concertação de preços (FB)",eng:"449 comentários",mot:"211 partilhas. Debate público sobre preços no retalho alimentar. Classificação Buzzmonitor: Negativo/Misto.",url:"https://facebook.com/1494539536035649"},
+  engAnalise:"O buzz da semana foi dominado por conteúdo de produto (frescos, padaria, novidades) no Facebook e Instagram. A notícia do processo de concertação de preços — em que o tribunal ilibou as insígnias — gerou debate público e neutralizou o sentimento comparável.",
+  destaque:"Das 4.672 menções não comparáveis, 58,3% foram positivas e 18,8% negativas — NSS não comparável de +39,5. Facebook (57,8%) e Instagram (25,6%) concentraram o volume. Earned media em 35,6%, com UGC de regresso às aulas e novidades de produto. O NSS comparável ficou neutro (+0,0), penalizado pela notícia do processo de concertação de preços.",
+  redes:[{r:"Facebook",v:2702,p:"57,8%"},{r:"Instagram",v:1195,p:"25,6%"},{r:"Notícias",v:500,p:"10,7%"},{r:"TikTok",v:261,p:"5,6%"},{r:"YouTube",v:12,p:"0,3%"},{r:"X (Twitter)",v:2,p:"0,0%"}],
+  topPosts:[{rede:"TikTok",tema:"Uvas de algodão doce — novidade de Verão",eng:"1.644 curtidas",analise:"281 partilhas, 92 comentários. Maior Owned da Continente esta semana. Classificação: Positivo.",tipo:"Owned",url:"https://www.tiktok.com/@/video/7673469366796635425"},{rede:"Instagram",tema:"Homenagem — o Continente manifesta pesar",eng:"1.578 curtidas",analise:"20 comentários. Publicação institucional de homenagem. Classificação: Positivo.",tipo:"Owned",url:"https://www.instagram.com/p/DcCFVoysbpl/"},{rede:"Instagram",tema:"Eclipse — 'duração estimada de três dentadas' 🌑",eng:"541 curtidas",analise:"Publicação de produto com humor sazonal. Classificação: Positivo.",tipo:"Owned",url:"https://www.instagram.com/p/Db5Z0VVHTB5/"}],
+  verbatims:[{txt:"Aquele produto que entrega tudo e custa quase nada! 💜 O cheiro dessa linha de ameixa do Continente é sensacional.",autor:"priscilaemportugal",rede:"Instagram",cat:"Elogio",url:"https://www.instagram.com/reel/Db07YZsNQaT/",comments:417},{txt:"Não é presunto do continente 🐎 #TiagoGrila",autor:"tiagogrilaig",rede:"Instagram",cat:"Comentário",url:"https://www.instagram.com/reel/Db4Hlb8MUBO/",comments:117},{txt:"Fui ao Continente só dar uma olhadinha… e encontrei tanta coisa escolar fofa que até o bolso ficou triste 😂🎒",autor:"diariobremportugal",rede:"TikTok",cat:"Comentário",url:"https://www.tiktok.com/@/video/7673235048518159649",comments:69},{txt:"Já provei e… gostei 🤌 @Continente #continente #pudim #proteina #pudimproteico",autor:"carolinagomesdasilva_",rede:"TikTok",cat:"Elogio",url:"https://www.tiktok.com/@/video/7673853578754280736",comments:37}],
+  sov:{total:5952,marcas:[{m:"Continente",v:1869,p:"31,40%"},{m:"Pingo Doce",v:1476,p:"24,80%"},{m:"Lidl",v:1212,p:"20,36%"},{m:"Auchan",v:711,p:"11,95%"},{m:"Mercadona",v:684,p:"11,49%"}]},
+  benchNSS:[{m:"Lidl",nss:33.0},{m:"Mercadona",nss:20.4},{m:"Continente",nss:0.0},{m:"Pingo Doce",nss:-7.7},{m:"Auchan",nss:-19.7}],
+  redesMarca:[{marca:"Continente",canais:[{c:"Facebook",v:1476,p:"79,0%"},{c:"Notícias",v:266,p:"14,2%"},{c:"Instagram",v:125,p:"6,7%"},{c:"X (Twitter)",v:2,p:"0,1%"}],total:1869,nota:"Instagram comparável (apenas posts e reels) agora incluído no universo SOV."},{marca:"Pingo Doce",canais:[{c:"Facebook",v:1139,p:"77,2%"},{c:"X (Twitter)",v:202,p:"13,7%"},{c:"Instagram",v:105,p:"7,1%"},{c:"Notícias",v:30,p:"2,0%"}],total:1476},{marca:"Lidl",canais:[{c:"Facebook",v:953,p:"78,6%"},{c:"X (Twitter)",v:132,p:"10,9%"},{c:"Notícias",v:65,p:"5,4%"},{c:"Instagram",v:62,p:"5,1%"}],total:1212},{marca:"Auchan",canais:[{c:"Facebook",v:699,p:"98,3%"},{c:"Notícias",v:12,p:"1,7%"}],total:711},{marca:"Mercadona",canais:[{c:"Facebook",v:582,p:"85,1%"},{c:"X (Twitter)",v:65,p:"9,5%"},{c:"Instagram",v:20,p:"2,9%"},{c:"Notícias",v:17,p:"2,5%"}],total:684}],
+  temas:[{marca:"Lidl",cor:"#0050A0",tema:"Melhor NSS do setor — humor de produto",posPost:"'Eclipse & croissants' — humor de produto (FB)",posEng:"9.317 curtidas",posMot:"425 partilhas, 289 comentários — maior post do setor esta semana.",posUrl:"https://facebook.com/1487959026708158",negPost:"Sem post negativo de destaque",negEng:"—",negMot:"NSS +33,0.",negUrl:"",analise:"O Lidl lidera o NSS do setor (+33,0) com 20,4% SOV — 'Eclipse & croissants' (9.317 curtidas) foi o maior post do setor.",destaque:"Melhor NSS do setor (+33,0) · maior post (9.317)."},{marca:"Pingo Doce",cor:"#0A6B3B",tema:"Produto forte, mas notícia de preços pesou",posPost:"Pão torcido mediterrânico (FB)",posEng:"3.149 curtidas",posMot:"41 partilhas, 95 comentários — boa adesão ao produto.",posUrl:"https://facebook.com/1465515442277568",negPost:"Notícia — processo de concertação de preços (FB)",negEng:"103 curtidas",negMot:"449 comentários — debate público; insígnia implicada.",negUrl:"https://facebook.com/1494539536035649",analise:"2.º SOV do setor (24,8%) mas NSS negativo (−7,7) — apesar de bons posts de produto ('pão torcido', 3.149 curtidas), a notícia do processo de concertação de preços penalizou o sentimento.",destaque:"2.º SOV mas NSS negativo (−7,7)."},{marca:"Mercadona",cor:"#F58220",tema:"Frescos de Verão apesar de notícia negativa",posPost:"Pêssegos paraguaios — fruta de Verão (FB)",posEng:"7.517 curtidas",posMot:"206 partilhas, 159 comentários — forte adesão.",posUrl:"https://facebook.com/1349692230676132",negPost:"Notícia — detetive privado para vigiar funcionário (FB)",negEng:"282 curtidas",negMot:"98 comentários — controvérsia laboral.",negUrl:"https://facebook.com/1663728079127109",analise:"NSS +20,4 e 11,5% SOV — 'pêssegos paraguaios' (7.517 curtidas) e a expansão (Vila Real) compensaram a notícia do detetive privado.",destaque:"NSS positivo (+20,4) apesar da controvérsia."},{marca:"Auchan",cor:"#7C3AED",tema:"Boas receitas, mas abertura e notícia dividiram",posPost:"Tarte tatin de tomate — receita de Verão (FB)",posEng:"2.638 curtidas",posMot:"99 partilhas, 31 comentários — boa receção.",posUrl:"https://facebook.com/1478772750962033",negPost:"Abertura Marco de Canaveses + notícia de preços (FB)",negEng:"277 curtidas",negMot:"Abertura com receção mista; insígnia implicada na notícia de preços.",negUrl:"https://facebook.com/1527211192755299",analise:"Pior NSS do setor (−19,7) e 12,0% SOV — apesar de bons posts de receita (tarte tatin, 2.638 curtidas), a abertura em Marco de Canaveses e a notícia de preços dividiram o sentimento.",destaque:"Pior NSS do setor (−19,7)."}],
+  movimentos:[{titulo:"Síntese competitiva — 08–14 Ago 2026",texto:"O Continente lidera o SOV (31,4%) — agora com Instagram comparável (posts e reels) incluído — mas o sentimento comparável ficou neutro (NSS +0,0), penalizado pela notícia do processo de concertação de preços (o tribunal ilibou as insígnias). O Lidl teve o melhor NSS do setor (+33,0) e o maior post ('Eclipse & croissants', 9.317 curtidas). O Pingo Doce é 2.º em SOV (24,8%) mas com NSS negativo (−7,7). A Mercadona com NSS +20,4 apesar da notícia do detetive privado. O Auchan com o pior NSS (−19,7), marcado pela abertura em Marco de Canaveses."}]
+}};
+
+const SEMANAS={"04-10 de Julho de 2026":DADOS_W1,"11-17 de Julho de 2026":DADOS_W2,"18-24 de Julho de 2026":DADOS_W3,"25-31 de Julho de 2026":DADOS_W4,"01-07 de Agosto de 2026":DADOS_W5,"08-14 de Agosto de 2026":DADOS_W6};
+
+// =====================================================================
+// RENDER ENGINE v17
+// =====================================================================
+const brandClr={Continente:"#E30613",Lidl:"#0050A0","Pingo Doce":"#0A6B3B",Mercadona:"#F58220",Auchan:"#7C3AED"};
+const redeClr={Facebook:"#1877F2",Instagram:"#E1306C",TikTok:"#010101",Notícias:"#F59E0B",YouTube:"#FF0000",Blogs:"#8B5CF6","X (Twitter)":"#0EA5E9",Fóruns:"#94A3B8",Outros:"#CBD5E1","Google Play":"#34A853","App Store":"#007AFF"};
+const redeIco={Instagram:"📷",TikTok:"🎵",Facebook:"👍",YouTube:"▶️","X (Twitter)":"✖️",Notícias:"📰",Blogs:"📝",Fóruns:"💬","Google Play":"🤖",Outros:"🌐"};
+const catClr={"Elogio":"bg-green-100 text-green-800","Crítica":"bg-red-100 text-red-800","Comentário":"bg-blue-100 text-blue-800","Dúvida":"bg-purple-100 text-purple-800"};
+const corMap={verde:{bg:"#F0FFF4",tx:"#22543D",brd:"#C6F6D5"},ambar:{bg:"#FFFAF0",tx:"#7B341E",brd:"#FEEBC8"},vermelho:{bg:"#FFF5F5",tx:"#742A2A",brd:"#FED7D7"}};
+const tipoBadge=t=>t==="Owned"?'<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800">Owned</span>':'<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100 text-purple-800">Earned</span>';
+const fmtN=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,".");
+const fmtNSS=n=>(n>0?"+":"")+n.toFixed(1).replace(".",",");
+const extLink=(url,lbl)=>url&&url!=="link não disponível"?`<a href="${url}" target="_blank" rel="noopener noreferrer" class="ext-link mt-1 inline-flex items-center gap-0.5">🔗 ${lbl||"Ver publicação"}</a>`:'';
+const tt=(txt)=>`<span class="tt-wrap"><span class="tt-icon">?</span><span class="tt-body">${txt}</span></span>`;
+
+if(typeof Chart!=="undefined"){Chart.defaults.font.family="'Segoe UI',system-ui,sans-serif";Chart.defaults.font.size=11;Chart.defaults.color="#2D3748";}
+const TT={backgroundColor:"#1A202C",padding:10,cornerRadius:8,titleFont:{weight:"600"},bodyColor:"#EDF2F7",boxPadding:4};
+const _ch={};
+function safeChart(id,el,cfg){if(_ch[id]){try{_ch[id].destroy();}catch(e){}}try{if(el&&typeof Chart!=="undefined"){_ch[id]=new Chart(el,cfg);return _ch[id];}return null;}catch(e){return null;}}
+
+let DADOS=DADOS_W1;
+document.querySelectorAll(".tab-btn").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".tab-btn").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  document.getElementById("view-crm").classList.toggle("hidden",b.dataset.tab!=="crm");
+  document.getElementById("view-listening").classList.toggle("hidden",b.dataset.tab!=="listening");
+}));
+document.getElementById("selSemana").addEventListener("change",e=>{
+  const v=e.target.value;
+  document.getElementById("badgeSemana").textContent=v.replace(" de Julho"," Jul").replace(" de Agosto"," Ago");
+  document.getElementById("footSemana").textContent=v;
+  DADOS=SEMANAS[v]||DADOS_W1;renderAll();
+});
+
+function renderAll(){renderCRM(DADOS.crm);renderSL(DADOS.sl);}
+
+function renderCRM(crm){
+  document.getElementById("crmSentGrid").innerHTML=crm.sentimento.map(s=>{
+    const c=corMap[s.cor]||corMap.verde;
+    return`<div class="rounded-xl p-3 text-center border" style="background:${c.bg};border-color:${c.brd}"><p class="text-[10px] font-bold uppercase tracking-wide" style="color:${c.tx}">${s.tipo}</p><p class="text-xl font-bold mt-0.5" style="color:${c.tx}">${fmtN(s.vol)}</p><p class="text-[11px] font-semibold" style="color:${c.tx}">${s.pct}</p>${s.var?`<p class="text-[9px] mt-1 opacity-80" style="color:${c.tx}">${s.var}</p>`:""}</div>`;
+  }).join("");
+  document.getElementById("crmNota").textContent=crm.nota||"";
+  const k=crm.kpis;
+  document.getElementById("crmKpisGrid").innerHTML=
+    `<div class="card p-3"><p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Total Interações</p><p class="text-2xl font-bold text-[#1A202C] mt-0.5">${fmtN(k.total)}</p><p class="text-[11px] text-slate-600 mt-0.5">${k.varTotal}</p></div>`+
+    `<div class="card p-3"><p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wide flex items-center">SLA Total ${tt("Tempo médio da criação do contacto à 1.ª resposta.")}</p><p class="text-2xl font-bold text-[#1A202C] mt-0.5">${k.sla}</p><p class="text-[11px] text-slate-600 mt-0.5">${k.slaVar}</p></div>`+
+    `<div class="card p-3"><p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wide flex items-center">SLA N1 ${tt("Tempo médio de resolução de nível 1 — métrica independente.")}</p><p class="text-2xl font-bold text-[#1A202C] mt-0.5">${k.n1}</p><p class="text-[10px] font-semibold text-green-700 mt-0.5">✓ Objetivo: 4h</p></div>`;
+  const maxC=Math.max(...crm.canais.map(c=>c.vol));
+  document.getElementById("crmCanaisGrid").innerHTML=crm.canais.map(c=>`<div><div class="flex justify-between text-[11px] mb-0.5"><span class="text-[#2D3748] font-medium">${c.canal}</span><span class="text-slate-600"><span class="font-bold text-[#1A202C]">${fmtN(c.vol)}</span> · ${c.pct}</span></div><div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full rounded-full" style="width:${(c.vol/maxC*100).toFixed(0)}%;background:${redeClr[c.canal]||"#E30613"}"></div></div></div>`).join("");
+  const origemTotal=crm.origem.reduce((a,b)=>a+b.vol,0);
+  safeChart("origem",document.getElementById("chartOrigem"),{type:"doughnut",data:{labels:crm.origem.map(o=>o.tipo),datasets:[{data:crm.origem.map(o=>o.vol),backgroundColor:["#E30613","#F59E0B"],borderWidth:0,hoverOffset:5}]},options:{responsive:true,maintainAspectRatio:false,cutout:"62%",plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>` ${c.label}: ${fmtN(c.parsed)} (${(c.parsed/origemTotal*100).toFixed(0)}%)`}}}}});
+  document.getElementById("crmOrigemList").innerHTML=crm.origem.map((o,i)=>`<div class="flex items-center justify-between text-[11px]"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full inline-block" style="background:${i===0?"#E30613":"#F59E0B"}"></span><span class="text-[#2D3748]">${o.tipo}</span></span><span class="text-slate-600"><span class="font-bold text-[#1A202C]">${fmtN(o.vol)}</span> · ${o.pct}</span></div>`).join("");
+  document.getElementById("crmAssuntosBarGrid").innerHTML=crm.assuntos.map(a=>{
+    if(a.semDetalhe)return`<div><div class="flex justify-between text-[11px] mb-0.5"><span class="text-[#2D3748] font-medium">${a.nome}</span><span class="font-bold text-[#1A202C]">${fmtN(a.total)}</span></div><p class="text-[9px] text-slate-400 italic">detalhe Neg/Neu/Pos a confirmar na fonte</p></div>`;
+    const tot=a.neg+a.neu+a.pos;
+    return`<div><div class="flex justify-between text-[11px] mb-0.5"><span class="text-[#2D3748] font-medium">${a.nome}</span><span class="font-bold text-[#1A202C]">${fmtN(tot)}</span></div><div class="sent-bar"><div class="s-neg" style="width:${(a.neg/tot*100).toFixed(0)}%"></div><div class="s-neu" style="width:${(a.neu/tot*100).toFixed(0)}%"></div><div class="s-pos" style="width:${(a.pos/tot*100).toFixed(0)}%"></div></div><div class="flex gap-2 text-[9px] mt-0.5"><span class="text-red-600">◾ ${a.neg}</span><span class="text-amber-600">◾ ${a.neu}</span><span class="text-green-600">◾ ${a.pos}</span></div></div>`;
+  }).join("");
+  document.getElementById("crmNeg3Grid").innerHTML=crm.neg3.map((m,i)=>`<div class="bg-red-50 rounded-xl p-3 border border-red-100"><div class="flex items-center gap-2 mb-1.5"><span class="w-5 h-5 rounded-full bg-[#E30613] text-white text-[10px] font-bold flex items-center justify-center shrink-0">${i+1}</span><span class="font-semibold text-[#1A202C] text-[12px]">${m.motivo}</span></div><p class="text-[13px] font-bold wine">${m.pct} <span class="text-[10px] font-medium text-slate-500">dos neg.</span></p><p class="text-[11px] text-[#4A5568] leading-relaxed mt-1">${m.expl}</p></div>`).join("");
+  document.getElementById("crmPiorTitulo").textContent=crm.piorMotivo.titulo;
+  document.getElementById("crmPiorExpl").textContent=crm.piorMotivo.expl;
+  document.getElementById("crmPos3Grid").innerHTML=crm.pos3.map((m,i)=>`<div class="bg-green-50 rounded-xl p-3 border border-green-100"><div class="flex items-center gap-2 mb-1.5"><span class="w-5 h-5 rounded-full bg-green-700 text-white text-[10px] font-bold flex items-center justify-center shrink-0">${i+1}</span><span class="font-semibold text-[#1A202C] text-[12px]">${m.motivo}${m.tooltip?tt(m.tooltip):""}</span></div><p class="text-[13px] font-bold text-green-800">${m.pct} <span class="text-[10px] font-medium text-slate-500">dos pos.</span></p><p class="text-[11px] text-[#4A5568] leading-relaxed mt-1">${m.expl}</p></div>`).join("");
+  const tp=crm.topPost;
+  document.getElementById("crmTopPostArea").innerHTML=`<div class="flex flex-col sm:flex-row sm:items-start gap-3"><div class="flex items-center gap-2">${redeIco[tp.rede]||"🌐"} <span class="text-[11px] font-bold text-slate-700">${tp.rede}</span>${tipoBadge(tp.tipo)}</div><div class="flex-1"><p class="font-semibold text-[#1A202C] text-[13px]">${tp.tema}</p><p class="text-[12px] font-bold wine mt-0.5">${tp.eng}</p><p class="text-[11px] text-[#4A5568] mt-0.5">${tp.analise}</p>${extLink(tp.url)}</div></div>`;
+  document.getElementById("crmAlerta").innerHTML=crm.alerta.ativo?`<div class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3"><p class="text-[11px] text-amber-900 leading-relaxed">${crm.alerta.msg}</p></div>`:"";
+  document.getElementById("crmLeituraPos").innerHTML=crm.leituraPos.map(t=>`<li class="text-[12px] text-[#2D3748]">${t}</li>`).join("");
+  document.getElementById("crmLeituraNeg").innerHTML=crm.leituraNeg.map(t=>`<li class="text-[12px] text-[#2D3748]">${t}</li>`).join("");
+}
+
+function renderSL(sl){
+  const oe=sl.ownedEarned;
+  document.getElementById("slOwnedEarnedUni").textContent=oe.uni||"";
+  document.getElementById("slOwnedEarnedCards").innerHTML=
+    `<div class="rounded-xl p-3.5 border bg-blue-50 border-blue-200"><span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-200 text-blue-900">Owned Media</span><p class="text-2xl font-bold text-blue-900 mt-1">${fmtN(oe.owned.vol)} <span class="text-[13px] font-semibold">· ${oe.owned.pct}</span></p><p class="text-[11px] text-[#4A5568] mt-0.5">${oe.owned.desc}</p></div>`+
+    `<div class="rounded-xl p-3.5 border bg-purple-50 border-purple-200"><span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-200 text-purple-900">Earned Media</span><p class="text-2xl font-bold text-purple-900 mt-1">${fmtN(oe.earned.vol)} <span class="text-[13px] font-semibold">· ${oe.earned.pct}</span></p><p class="text-[11px] text-[#4A5568] mt-0.5">${oe.earned.desc}</p></div>`;
+  safeChart("ownedEarned",document.getElementById("chartOwnedEarned"),{type:"doughnut",data:{labels:["Owned","Earned"],datasets:[{data:[oe.owned.vol,oe.earned.vol],backgroundColor:["#3B82F6","#A855F7"],borderWidth:0,hoverOffset:5}]},options:{responsive:true,maintainAspectRatio:false,cutout:"60%",plugins:{legend:{position:"bottom",labels:{padding:8,usePointStyle:true,pointStyle:"circle",font:{size:10}}},tooltip:{...TT,callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return` ${c.label}: ${fmtN(c.parsed)} (${(c.parsed/t*100).toFixed(0)}%)`;}}}}}});
+  const k=sl.kpis;
+  const vDir=(d,v)=>!v?"":d==="up"?`<p class="text-[10px] text-green-700 font-semibold mt-0.5">${v}</p>`:d==="down"?`<p class="text-[10px] text-red-700 font-semibold mt-0.5">${v}</p>`:`<p class="text-[10px] text-slate-500 mt-0.5">${v}</p>`;
+  const nssNC=parseFloat(String(k.nssNaoComp||"0").replace(",","."));
+  const nccC=nssNC>=20?"text-green-700":nssNC>=0?"text-amber-700":"text-red-700";
+  document.getElementById("slKpisGrid").innerHTML=
+    `<div class="card p-3.5"><p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Volume Total</p><p class="text-2xl font-bold text-[#1A202C] mt-0.5">${k.volTotal}</p><span class="inline-block mt-1 text-[10px] font-semibold text-slate-500 bg-slate-100 rounded-full px-2 py-0.5">Owned + Earned · todas as redes</span>${vDir(k.volDir,k.volVar)}</div>`+
+    `<div class="card p-3.5"><p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wide flex items-center gap-1">NSS Não Comparável ${tt("NSS não comparável = % Positivo − % Negativo, calculado sobre o volume total de menções (todas as redes, não filtradas para SOV).")}</p><p class="text-2xl font-bold ${nccC} mt-0.5">${k.nssNaoComp}</p><span class="inline-block mt-1 text-[10px] font-semibold text-slate-600 bg-slate-100 rounded-full px-2 py-0.5">Todas as redes</span>${vDir(k.nssDir,k.nssVar)}</div>`;
+  document.getElementById("slKpisNota").textContent=sl.kpisNota||"";
+  const sent=sl.sentimento;
+  document.getElementById("slSentUni").textContent=sent.uni||"";
+  safeChart("sentimento",document.getElementById("chartSentimento"),{type:"doughnut",data:{labels:["Positivo","Neutro","Negativo"],datasets:[{data:[sent.pos.vol,sent.neu.vol,sent.neg.vol],backgroundColor:["#38A169","#D69E2E","#E53E3E"],borderWidth:0,hoverOffset:5}]},options:{responsive:true,maintainAspectRatio:false,cutout:"58%",plugins:{legend:{position:"bottom",labels:{padding:6,usePointStyle:true,pointStyle:"circle",font:{size:10}}},tooltip:{...TT,callbacks:{label:c=>` ${c.label}: ${fmtN(c.parsed)} menções`}}}}});
+  document.getElementById("slSentCards").innerHTML=`<div class="bg-green-100 rounded-lg py-1.5 text-center"><p class="text-[12px] font-bold text-green-900">${fmtN(sent.pos.vol)}</p><p class="text-[9px] text-green-800">Pos · ${sent.pos.pct}</p></div><div class="bg-amber-100 rounded-lg py-1.5 text-center"><p class="text-[12px] font-bold text-amber-900">${fmtN(sent.neu.vol)}</p><p class="text-[9px] text-amber-800">Neu · ${sent.neu.pct}</p></div><div class="bg-red-100 rounded-lg py-1.5 text-center"><p class="text-[12px] font-bold text-red-900">${fmtN(sent.neg.vol)}</p><p class="text-[9px] text-red-800">Neg · ${sent.neg.pct}</p></div>`;
+  document.getElementById("slEngDestaques").innerHTML=
+    `<div class="card p-3 flex-1"><div class="flex items-center justify-between mb-1"><span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-green-100 text-green-900">▲ Maior Eng. Positivo</span><span class="text-[12px] font-bold text-[#1A202C]">${sl.engPos.eng}</span></div><p class="font-semibold text-[#1A202C] text-[11px]">${sl.engPos.post}</p><p class="text-[10px] text-[#4A5568] mt-0.5 leading-snug">${sl.engPos.mot}</p>${extLink(sl.engPos.url)}</div>`+
+    `<div class="card p-3 flex-1"><div class="flex items-center justify-between mb-1"><span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-red-100 text-red-900">▼ Pub. Neg./Mista c/ Maior Eng.</span><span class="text-[12px] font-bold text-[#1A202C]">${sl.engNeg.eng}</span></div><p class="font-semibold text-[#1A202C] text-[11px]">${sl.engNeg.post}</p><p class="text-[10px] text-[#4A5568] mt-0.5 leading-snug">${sl.engNeg.mot}</p>${extLink(sl.engNeg.url)}</div>`+
+    `<div class="card bg-slate-50 p-3 flex-1"><p class="text-[9px] font-bold text-slate-500 uppercase tracking-wide mb-1">Análise</p><p class="text-[11px] text-[#2D3748] leading-relaxed">${sl.engAnalise}</p></div>`;
+  document.getElementById("slDestaque").textContent=sl.destaque;
+  safeChart("redeDist",document.getElementById("chartRedeDist"),{type:"doughnut",data:{labels:sl.redes.map(r=>r.r),datasets:[{data:sl.redes.map(r=>r.v),backgroundColor:sl.redes.map(r=>redeClr[r.r]||"#94A3B8"),borderWidth:0,hoverOffset:5}]},options:{responsive:true,maintainAspectRatio:false,cutout:"58%",plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return` ${c.label}: ${fmtN(c.parsed)} (${(c.parsed/t*100).toFixed(1)}%)`;}}}}}}); 
+  document.getElementById("slRedeDistGrid").innerHTML=sl.redes.map(r=>`<div class="flex items-center gap-1.5 rounded-lg px-2 py-1 bg-white border border-slate-100"><span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${redeClr[r.r]||"#94A3B8"}"></span><span class="text-[11px] font-medium text-[#2D3748] flex-1">${r.r}</span><span class="text-[11px] font-bold text-[#1A202C]">${fmtN(r.v)}</span><span class="text-[10px] text-slate-400">${r.p}</span></div>`).join("");
+  document.getElementById("slTopPostsGrid").innerHTML=sl.topPosts.map(p=>`<div class="card p-3.5 flex flex-col"><div class="flex items-center justify-between mb-2"><div class="flex items-center gap-1.5">${redeIco[p.rede]||"🌐"} <span class="text-[11px] font-bold text-[#2D3748]">${p.rede}</span>${tipoBadge(p.tipo)}</div><span class="text-[12px] font-bold wine">${p.eng}</span></div><p class="font-semibold text-[#1A202C] text-[12px] mb-1">${p.tema}</p><p class="text-[11px] text-[#4A5568] leading-relaxed">${p.analise}</p><div class="mt-auto pt-1">${extLink(p.url)}</div></div>`).join("");
+  const cBadge=c=>`<span class="text-[9px] font-bold px-1.5 py-0.5 rounded ${catClr[c]||"bg-slate-100 text-slate-600"}">${c}</span>`;
+  document.getElementById("slVerbatimsGrid").innerHTML=sl.verbatims.map(v=>{
+  const commBadge=v.comments?`<span class="text-[9px] text-slate-500">💬 ${v.comments} comentários</span>`:"";
+  return`<div class="card px-3.5 py-2.5 flex flex-col"><div class="flex items-center justify-between mb-1.5">${cBadge(v.cat)}<span class="text-[9px] text-slate-500">${v.rede}</span></div><p class="text-[12px] text-[#1A202C] italic leading-snug">"${v.txt}"</p><p class="text-[10px] text-slate-500 mt-1">— ${v.autor}</p>${commBadge}<div class="mt-1.5">${extLink(v.url,"Ver comentário")}</div></div>`;
+}).join("");
+  const sov=sl.sov;
+  document.getElementById("slSovSubtitle").textContent=`${fmtN(sov.total)} menções comparáveis — Facebook, X, Instagram (posts/reels), YouTube, Notícias, Blogs, Fóruns, Misc.`;
+  safeChart("concorrencia",document.getElementById("chartConcorrencia"),{type:"doughnut",data:{labels:sov.marcas.map(m=>m.m),datasets:[{data:sov.marcas.map(m=>m.v),backgroundColor:sov.marcas.map(m=>brandClr[m.m]||"#94A3B8"),borderWidth:2,borderColor:"#fff",hoverOffset:5}]},options:{responsive:true,maintainAspectRatio:false,cutout:"55%",plugins:{legend:{position:"bottom",labels:{padding:8,usePointStyle:true,pointStyle:"circle",font:{size:10}}},tooltip:{...TT,callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return` ${c.label}: ${fmtN(c.parsed)} (${(c.parsed/t*100).toFixed(1)}%)`;}}}}}});
+  const semKey=DADOS.meta.semana;
+  const nssAnterior=NSS_PREV[semKey];
+  const benchOrd=[...sl.benchNSS].sort((a,b)=>b.nss-a.nss);
+  const medals=["🥇","🥈","🥉"];
+  document.getElementById("slBenchBody").innerHTML=benchOrd.map((m,i)=>{
+    const nc=m.nss>5?"text-green-700":m.nss>=-5?"text-amber-700":"text-red-700";
+    let tend="—",tendNota="Semana inicial";
+    if(nssAnterior&&nssAnterior[m.m]!==undefined){const d=m.nss-nssAnterior[m.m];tendNota=`NSS anterior: ${fmtNSS(nssAnterior[m.m])}`;if(Math.abs(d)<0.1)tend=`<span class="text-slate-500">▬ Manteve</span>`;else if(d>0)tend=`<span class="text-green-700 font-bold">▲</span> Subiu ${fmtNSS(d)} p.`;else tend=`<span class="text-red-700 font-bold">▼</span> Desceu ${fmtNSS(d)} p.`;}
+    return`<tr class="border-b border-slate-100 last:border-0 ${m.m==="Continente"?"bg-red-50/50":""}"><td class="py-2 pr-2 font-bold text-slate-400">${medals[i]||i+1}</td><td class="py-2 pr-3 font-semibold ${m.m==="Continente"?"wine":"text-[#1A202C]"}">${m.m}</td><td class="py-2 pr-3 font-bold ${nc}">${fmtNSS(m.nss)}</td><td class="py-2 text-[11px] text-[#2D3748]"><span class="tt-wrap">${tend}<span class="tt-body">Tendência = variação NSS vs. sem. anterior, mesmo universo. ${tendNota}</span></span></td></tr>`;
+  }).join("");
+  document.getElementById("slBenchNota").textContent=nssAnterior?"Tendência = variação numérica do NSS vs. semana anterior · mesmo universo comparável.":"Semana inicial — sem tendência disponível.";
+  const cC={...redeClr};
+  document.getElementById("slRedesMarcaGrid").innerHTML=sl.redesMarca.map(m=>{
+    const tot=m.total||m.canais.reduce((s,c)=>s+c.v,0);
+    const nota=m.nota?`<p class="text-[9px] text-amber-700 bg-amber-50 rounded px-2 py-1 mt-1 leading-snug">${m.nota}</p>`:"";
+    const rows=m.canais.map(c=>{
+      const pct=tot>0?(c.v/tot*100):0;
+      const barClr=cC[c.c]||"#E30613";
+      return`<div class="mb-1.5"><div class="flex justify-between text-[11px] mb-0.5"><span class="text-[#2D3748]">${c.c}</span><span class="text-slate-600"><span class="font-bold text-[#1A202C]">${fmtN(c.v)}</span> · ${c.p}</span></div><div class="h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full rounded-full" style="width:${pct.toFixed(1)}%;background:${barClr}"></div></div></div>`;
+    }).join("");
+    return`<div class="pab"><p class="font-semibold text-[12px] mb-2 ${m.marca==="Continente"?"wine":"text-[#1A202C]"}">${m.marca} <span class="text-[10px] font-normal text-slate-400">(total comparável: ${fmtN(tot)} menções)</span></p>${rows}${nota}</div>`;
+  }).join("");
+  document.getElementById("slTemasGrid").innerHTML=sl.temas.map(t=>`<div class="card p-3 pab" style="border-left:3px solid ${t.cor}"><div class="grid lg:grid-cols-12 gap-2 items-stretch"><div class="lg:col-span-2 flex flex-col justify-center pr-2 lg:border-r lg:border-slate-100"><p class="text-[13px] font-bold text-[#1A202C]">${t.marca}</p><p class="text-[10px] text-slate-500 mt-0.5 leading-snug">${t.tema}</p></div><div class="lg:col-span-4 bg-green-50/60 rounded-lg p-2"><div class="flex items-center justify-between mb-0.5"><span class="text-[8px] font-bold px-1 py-0.5 rounded bg-green-100 text-green-900">▲ Positivo</span><span class="text-[11px] font-bold text-[#1A202C]">${t.posEng}</span></div><p class="font-semibold text-[#1A202C] text-[11px] leading-snug">${t.posPost}</p><p class="text-[10px] text-[#4A5568]">${t.posMot}</p>${extLink(t.posUrl)}</div><div class="lg:col-span-4 bg-red-50/60 rounded-lg p-2"><div class="flex items-center justify-between mb-0.5"><span class="text-[8px] font-bold px-1 py-0.5 rounded bg-red-100 text-red-900">▼ Neg./Misto</span><span class="text-[11px] font-bold text-[#1A202C]">${t.negEng}</span></div><p class="font-semibold text-[#1A202C] text-[11px] leading-snug">${t.negPost}</p><p class="text-[10px] text-[#4A5568]">${t.negMot}</p>${extLink(t.negUrl)}</div><div class="lg:col-span-2 rounded-lg p-2 flex flex-col justify-center text-white" style="background:${t.cor}"><p class="text-[8px] font-bold uppercase tracking-wide mb-0.5 text-white/75">★</p><p class="text-[10px] leading-snug">${t.destaque}</p></div></div><p class="text-[10px] text-[#4A5568] leading-snug mt-1.5 pt-1.5 border-t border-slate-100"><span class="font-semibold text-[#2D3748]">Análise:</span> ${t.analise}</p></div>`).join("");
+  document.getElementById("slMovimentosGrid").innerHTML=sl.movimentos.map(mv=>`<div class="card bg-slate-50 p-3.5"><p class="text-[12px] font-bold text-[#1A202C] mb-1">${mv.titulo||"Síntese"}</p><p class="text-[11px] text-[#2D3748] leading-relaxed">${mv.texto}</p></div>`).join("");
+}
+
+renderAll();
+</script>
+</body>
+</html>
