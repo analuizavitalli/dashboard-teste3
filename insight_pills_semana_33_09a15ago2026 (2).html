@@ -1,0 +1,1018 @@
+<!--
+  ╔══════════════════════════════════════════════════════════════════════════════╗
+  ║                     INSIGHT PILLS — TEMPLATE PILOTO                         ║
+  ║                          Unilever Portugal                                   ║
+  ╚══════════════════════════════════════════════════════════════════════════════╝
+
+  INSTRUÇÕES PARA PREENCHIMENTO (Teste Piloto — Semana Actual):
+  
+  Este template está pronto para receber dados reais. As secções a preencher estão
+  marcadas com comentários. Para cada placeholder:
+
+  1. HEADER & META BAR
+     - Período → Data: DD a DD/MM/AAAA
+  
+  2. DESODORIZANTES (Dove, Rexona, Axe, Vaseline)
+     Cada marca tem:
+     - topic-title → Insight claro
+     - subtopic + body-text → 2 subtópicos com análise
+     - verbatim → 2-3 comentários reais entre aspas
+     - LINKS OBRIGATÓRIOS: cada conteúdo ref. deve ter href="" preenchido
+
+  3. CAMPANHAS EM DESTAQUE
+     Para cada campanha (máx 4):
+     - Nome da campanha
+     - Número total de menções
+     - Barras de sentimento: ajustar width="" (soma = 100%)
+  
+  4. SKINCARE VISÃO GERAL
+     - Total de menções
+     - Distribuição de sentimento (%)
+     - Descrição por rede (Instagram, Facebook, X/Twitter, Fóruns)
+  
+  5. SKINCARE TEMAS (4 temas)
+     - Títulos + contexto + leitura cultural + insight
+  
+  6. TERRITÓRIOS DE MARCA (Dove, Rexona, Axe, Vaseline)
+     Para cada marca:
+     - Tema estratégico
+     - Contexto + Leitura cultural
+     - 1-2 links com fontes
+     - 2-3 insights acionáveis (com → no início)
+  
+  7. AUDIO PILL
+     - href="#" → URL do NotebookLM quando pronto
+
+  ═════════════════════════════════════════════════════════════════════════════
+-->
+
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insight Pills — Unilever</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap');
+
+  :root {
+    --navy: #0b1a33;
+    --blue-deep: #132f5e;
+    --blue-mid: #1e4d8f;
+    --blue-brand: #2563eb;
+    --blue-light: #e8effc;
+    --slate: #334155;
+    --gray-700: #3f4a5c;
+    --gray-500: #6b7280;
+    --gray-300: #d1d5db;
+    --gray-100: #f3f4f6;
+    --white: #ffffff;
+    --green: #059669;
+    --amber: #d97706;
+    --red: #dc2626;
+    --accent-orange: #e85830;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #e8eaed;
+    color: var(--navy);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .email-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--white);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 30px rgba(0,0,0,0.08);
+  }
+
+  /* ════════════════════════════════
+     HEADER
+     ════════════════════════════════ */
+  .header {
+    background: linear-gradient(160deg, #06101f 0%, #0e2245 30%, #1a3f7a 60%, #2563eb 100%);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-inner {
+    position: relative;
+    z-index: 2;
+    padding: 44px 48px 48px;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%; height: 100%;
+    background: radial-gradient(ellipse at 80% 30%, rgba(37,99,235,0.25) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .header-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 36px;
+  }
+  .header-elife {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .header-badge {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .header-title-group { text-align: left; }
+  .header-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 46px;
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .header-subtitle {
+    font-size: 20px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+    margin-top: 6px;
+    letter-spacing: 0.5px;
+  }
+  .header-divider {
+    width: 48px; height: 2px;
+    background: rgba(255,255,255,0.2);
+    margin-top: 28px;
+  }
+
+  /* ════════════════════════════════
+     META BAR
+     ════════════════════════════════ */
+  .meta-bar {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--gray-300);
+    font-size: 13px;
+    color: var(--gray-700);
+  }
+  .meta-item {
+    flex: 1;
+    padding: 18px 24px;
+  }
+  .meta-item + .meta-item { border-left: 1px solid var(--gray-300); }
+  .meta-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 4px;
+  }
+  .meta-value { font-weight: 500; color: var(--navy); font-size: 13px; line-height: 1.5; }
+
+  /* ════════════════════════════════
+     SECTIONS
+     ════════════════════════════════ */
+  .section { padding: 40px 48px; border-bottom: 1px solid #e5e7eb; }
+  .section:last-of-type { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .section-header-line {
+    width: 4px; height: 22px;
+    background: var(--blue-brand);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .section-header-text {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.2px;
+  }
+
+  /* ════════════════════════════════
+     BRAND BLOCKS
+     ════════════════════════════════ */
+  .brand-block {
+    margin-bottom: 40px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .brand-block:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+  .brand-identity {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .brand-logo-box {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .brand-logo-box.dove-bg { background: #fdf8ed; }
+  .brand-logo-box.rexona-bg { background: #eef4ff; }
+  .brand-logo-box.axe-bg { background: #f1f1f1; }
+  .brand-logo-box.vaseline-bg { background: #eaf0ff; }
+
+  .brand-logo-box svg { display: block; }
+
+  .brand-name-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-500);
+  }
+
+  .topic-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.45;
+  }
+
+  .subtopic {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--slate);
+    margin: 20px 0 8px;
+    line-height: 1.4;
+  }
+
+  p.body-text {
+    font-size: 13.5px;
+    color: var(--gray-700);
+    line-height: 1.75;
+    margin-bottom: 8px;
+  }
+  p.body-text a {
+    color: var(--blue-brand);
+    text-decoration: underline;
+    text-decoration-color: rgba(37,99,235,0.3);
+    text-underline-offset: 2px;
+    font-weight: 500;
+    transition: text-decoration-color 0.15s;
+  }
+  p.body-text a:hover { text-decoration-color: var(--blue-brand); }
+
+  .verbatim-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin: 22px 0 10px;
+  }
+  .verbatim {
+    font-size: 13px;
+    font-style: italic;
+    color: var(--gray-500);
+    line-height: 1.65;
+    padding: 10px 16px;
+    background: var(--gray-100);
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+
+  /* ════════════════════════════════
+     CAMPAIGNS
+     ════════════════════════════════ */
+  .campaign-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .campaign-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+  }
+  .campaign-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .campaign-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .campaign-logo-sm {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .campaign-logo-sm svg { display: block; }
+
+  .campaign-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .campaign-mentions {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-bottom: 12px;
+  }
+  .campaign-mentions strong { color: var(--navy); font-size: 20px; font-weight: 700; }
+  .sentiment-bar {
+    display: flex;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .sb-pos { background: var(--green); }
+  .sb-neu { background: var(--gray-300); }
+  .sb-neg { background: var(--red); }
+
+  .sentiment-labels {
+    display: flex;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 500;
+    flex-wrap: wrap;
+  }
+  .sl-pos { color: var(--green); }
+  .sl-neu { color: var(--gray-500); }
+  .sl-neg { color: var(--red); }
+
+  /* ════════════════════════════════
+     SKINCARE
+     ════════════════════════════════ */
+  .kpi-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .kpi-box {
+    flex: 1;
+    background: var(--gray-100);
+    border-radius: 10px;
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .kpi-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .kpi-label {
+    font-size: 11px;
+    color: var(--gray-500);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .kpi-box.green .kpi-number { color: var(--green); }
+  .kpi-box.amber .kpi-number { color: var(--amber); }
+  .kpi-box.red .kpi-number { color: var(--red); }
+
+  .data-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 24px 0 12px;
+  }
+  .network-item { margin-bottom: 12px; }
+  .network-head {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+  .network-desc {
+    font-size: 12.5px;
+    color: var(--gray-500);
+    line-height: 1.6;
+  }
+
+  /* ════════════════════════════════
+     TERRITORIES
+     ════════════════════════════════ */
+  .territory-block {
+    margin-bottom: 36px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .territory-block:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+
+  .territory-brand-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .territory-brand-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--blue-brand);
+  }
+  .territory-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 14px;
+    line-height: 1.45;
+  }
+  .territory-sub {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--slate);
+    margin: 16px 0 6px;
+  }
+
+  .source-links {
+    margin: 12px 0;
+  }
+  .source-link {
+    display: block;
+    font-size: 11.5px;
+    color: var(--blue-brand);
+    text-decoration: none;
+    word-break: break-all;
+    line-height: 1.8;
+  }
+  .source-link:hover { text-decoration: underline; }
+  .source-link::before { content: '🔗 '; }
+
+  .insight-box {
+    background: linear-gradient(135deg, #f0f5ff 0%, #f8faff 100%);
+    border-left: 3px solid var(--blue-brand);
+    padding: 16px 20px;
+    margin: 16px 0 8px;
+    border-radius: 0 8px 8px 0;
+  }
+  .insight-box .ib-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--blue-brand);
+    margin-bottom: 8px;
+  }
+  .insight-box p {
+    font-size: 13px;
+    color: var(--gray-700);
+    line-height: 1.7;
+    margin-bottom: 6px;
+  }
+  .insight-box p:last-child { margin-bottom: 0; }
+
+  /* ════════════════════════════════
+     AUDIO PILL
+     ════════════════════════════════ */
+  .audio-section {
+    padding: 36px 48px 40px;
+    background: var(--navy);
+    color: #fff;
+  }
+  .audio-top-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 12px;
+  }
+  .audio-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .audio-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .audio-player {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 14px 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .audio-player:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.2);
+  }
+  a.audio-player {
+    display: flex;
+    color: inherit;
+  }
+  .audio-play-btn {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--blue-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .audio-play-btn:hover { background: #3b7cf5; }
+  .audio-play-btn svg { display: block; }
+
+  .audio-track { flex: 1; }
+  .audio-waveform {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 28px;
+    margin-bottom: 6px;
+  }
+  .audio-waveform span {
+    display: block;
+    width: 3px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.2);
+  }
+  .audio-waveform span.played { background: var(--blue-brand); }
+  .audio-time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ════════════════════════════════
+     FOOTER
+     ════════════════════════════════ */
+  .footer {
+    padding: 28px 48px;
+    text-align: center;
+    border-top: 3px solid var(--accent-orange);
+  }
+  .footer-logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+  }
+  .footer-logo .fl-e { color: var(--accent-orange); }
+  .footer-logo .fl-g { color: var(--gray-500); font-weight: 400; }
+  .footer-copy {
+    font-size: 11px;
+    color: var(--gray-500);
+  }
+
+  /* ════════════════════════════════
+     RESPONSIVE
+     ════════════════════════════════ */
+  @media (max-width: 620px) {
+    .header-inner { padding: 32px 24px 36px; }
+    .header-title { font-size: 34px; }
+    .section, .audio-section { padding-left: 24px; padding-right: 24px; }
+    .meta-bar { flex-direction: column; }
+    .meta-item + .meta-item { border-left: none; border-top: 1px solid var(--gray-300); }
+    .campaign-grid { grid-template-columns: 1fr; }
+    .kpi-row { flex-direction: column; }
+    .footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="email-wrapper">
+
+  <!-- ═══════════ HEADER ═══════════ -->
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-top-row">
+        <div class="header-elife">Elife Portugal</div>
+        <div class="header-badge">Powered by AI</div>
+      </div>
+      <div class="header-title-group">
+        <div class="header-title">INSIGHT PILLS</div>
+        <div class="header-subtitle">Unilever</div>
+      </div>
+      <div class="header-divider"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ META BAR ═══════════ -->
+  <div class="meta-bar">
+    <div class="meta-item">
+      <div class="meta-label">Fontes</div>
+      <div class="meta-value">Facebook, Instagram, YouTube, TikTok, X/Twitter, Fóruns, Blogs, Notícias</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Período</div>
+      <!-- PLACEHOLDER: Alterar data para DD a DD/MM/AAAA -->
+      <div class="meta-value">09 a 15/08/2026</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ DESODORIZANTES ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div class="section-header-text">Desodorizantes | Novidades sobre as nossas marcas</div>
+    </div>
+
+    <!-- DOVE -->
+    <div class="brand-block">
+      <div class="brand-identity">
+        <div class="brand-logo-box dove-bg">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 4c-2 0-5 2-6 5-1.5 4 0 8 2 10 1.5 1.5 3.5 3 6 3s4-1 5.5-3c2.5-3 3-7 1.5-11C25.5 5 21 4 18 4z" fill="#c5a236" opacity="0.85"/>
+            <path d="M10 14c1-1 2.5-1.5 4-1 1 .3 1.8 1 2.2 2 .2.6 0 1.2-.4 1.5-.5.3-1.2.2-1.6-.2-.8-.8-2-.6-2.8.1-.5.5-.5 1.2 0 1.7l3 3c.8.8 2 .8 2.8 0" stroke="#c5a236" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <text x="18" y="32" text-anchor="middle" font-family="'DM Serif Display',Georgia,serif" font-size="9" fill="#c5a236" font-weight="400">Dove</text>
+          </svg>
+        </div>
+        <div class="brand-name-label">Dove</div>
+      </div>
+
+      <div class="topic-title">1. O Dove Whole Body Deo integra-se organicamente no verão português — Teatro, férias e beauty rituals dominam a conversa</div>
+
+      <div class="subtopic">1.1 O post do Teatro Gil Vicente gera onda de reações entusiastas — desodorizante para "todo o corpo" surpreende positivamente</div>
+      <p class="body-text">Na semana de 09 a 15/08, o pico de conversa em torno da Dove centrou-se num <a href="https://www.instagram.com/p/Db3m-y0sZSV/" target="_blank">post publicado no Instagram a 10/08 em contexto de teatro (#Pub — Teatro Gil Vicente)</a>, onde a marca apresenta dois atores em palco, cada um com o seu <em>Whole Body Deo Dove &amp; Dove Men</em>. A publicação gerou dezenas de reações espontâneas de fãs e seguidores — marcadas por emojis de fogo, aplausos e comentários de afeto. O produto, apresentado como "desodorizante para todo o corpo", provocou ainda surpresa positiva em utilizadores que não sabiam que o formato ia além das axilas, gerando partilhas orgânicas de descoberta.</p>
+
+      <div class="subtopic">1.2 A Dove integra-se de forma natural em conteúdos de verão — GRWM, unboxings e beauty hauls fortalecem presença earned</div>
+      <p class="body-text">Para além do Teatro, a Dove registou presença consistente ao longo da semana em conteúdos de criadores: um <a href="https://www.instagram.com/p/Db3p-JQOEzu/" target="_blank">unboxing da caixa de agosto da Primor (10/08)</a> onde o Dove Whole Body Deo Spray surge como destaque, e dois <em>Get Ready With Me</em> de férias — <a href="https://www.instagram.com/p/Db7yrblNkEV/" target="_blank">publicado a 12/08</a> e <a href="https://www.instagram.com/p/Db_e_MGK_Ob/" target="_blank">a 13/08 (Summer makeup, glowing skin)</a> — onde o Dove Beauty Bar aparece como parte da rotina de verão. A <a href="https://www.instagram.com/p/Db_OfvOMMDD/" target="_blank">seleção de agosto da @caretobeauty (13/08)</a> também incluiu Dove, com código de desconto e menção direta à marca. Esta presença earned, não paga, reflecte uma incorporação genuína nos rituais de cuidado de verão.</p>
+
+      <div class="verbatim-label">Verbatims</div>
+      <div class="verbatim">"Queres lindoooos, e eu que comprei a pensar que era só para axilas ahahhahahahah ainda bem que vi este vídeo!!!!!!!" — comentário na publicação do Teatro Gil Vicente no Instagram, 18/08/2026</div>
+      <div class="verbatim">"Não tirar o cheiro do outro ocupante, desse camarim. 😂" — comentário humorístico na publicação do Teatro Gil Vicente, 22/08/2026</div>
+      <div class="verbatim">"A caixa deste mês veio bem recheada, valeu imenso a pena ✨📦" — comentário no post de unboxing Primor com Dove Whole Body Deo, 10/08/2026</div>
+    </div>
+
+    <!-- REXONA -->
+    <div class="brand-block">
+      <div class="brand-identity">
+        <div class="brand-logo-box rexona-bg">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 22L17 6l9 16" stroke="#1a5fb4" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 6v22" stroke="#1a5fb4" stroke-width="2" stroke-linecap="round"/>
+            <text x="18" y="34" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="7" fill="#1a5fb4" font-weight="700" letter-spacing="0.3">REXONA</text>
+          </svg>
+        </div>
+        <div class="brand-name-label">Rexona</div>
+      </div>
+
+      <div class="topic-title" style="color:var(--gray-500); font-style:italic;">⚠️ Sem volume relevante esta semana (09 a 15/08/2026)</div>
+
+      <p class="body-text">Nesta semana não foram registadas menções com volume significativo para a Rexona nos monitores configurados. A marca não teve campanhas activas, conteúdo de earned media ou conversação orgânica com tração no período. Recomenda-se verificar se a configuração do monitor <em>rexona_pt_2026</em> está a capturar correctamente o volume de publicações.</p>
+    </div>
+
+    <!-- AXE -->
+    <div class="brand-block">
+      <div class="brand-identity">
+        <div class="brand-logo-box axe-bg">
+          <svg width="36" height="30" viewBox="0 0 36 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <text x="18" y="18" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="20" fill="#1a1a2e" font-weight="800" letter-spacing="2">AXE</text>
+          </svg>
+        </div>
+        <div class="brand-name-label">Axe</div>
+      </div>
+
+      <div class="topic-title">1. AXE Lower Body Spray em destaque — campanha irreverente gera maioritariamente humor e engajamento positivo no Instagram e TikTok</div>
+
+      <div class="subtopic">1.1 O formato do anúncio provoca surpresa e gargalhadas — "Eclipse em Leão" torna-se referência partilhada</div>
+      <p class="body-text">Na semana de 09 a 15/08, a campanha AXE Lower Body Spray dominou a conversação da marca, com 37 menções rastreadas (54% positivas, 35% neutras, 11% negativas). O <a href="https://www.instagram.com/p/Db7x9nBsKz9/" target="_blank">post de campanha no Instagram da Axe Portugal (12/08)</a> — associado ao visual do eclipse — gerou uma onda de comentários humorísticos e reações de surpresa. O trocadilho implícito entre "bolas alinhadas" (eclipse) e o produto Lower Body despoletou criatividade no público: comentários como "Eclipse em Leão! ♌️🔥" e "Fds 🤣🤣🤣🤣" revelam que o conceito foi captado e amplificado de forma orgânica. O <a href="https://www.tiktok.com/@axe.portugal/video/7672715441004940577?q=axeportugal&t=1787143466577" target="_blank">vídeo no TikTok da Axe Portugal (11/08)</a> gerou reações mais neutras, com utilizadores a pedirem follows — sinal de menor personalização do conteúdo para a plataforma.</p>
+
+      <div class="subtopic">1.2 Uma minoria rejeita o conceito — mas a reação negativa mantém-se dentro do ruído normal de campanha</div>
+      <p class="body-text">Os 11% de reações negativas no <a href="https://www.instagram.com/p/Db7x9nBsKz9/" target="_blank">post do Instagram (12/08)</a> expressam sobretudo desconforto com o conceito ("Ixi 🏳️‍🌈 ?", "Oxii, sai fora"), sem escalar para crítica estruturada à marca. Esta proporção está dentro do padrão esperado para campanhas de comunicação de produto íntimo masculino. Um influencer (<a href="https://www.instagram.com/p/Db8-NppMibO/" target="_blank">post de 12/08</a>) capitalizou a campanha com conteúdo de lifestyle ("Mudo o outfit conforme o mood. O cheiro também acompanha 👀"), elevando o tom para território aspiracional — complementar à irreverência da campanha principal.</p>
+
+      <div class="verbatim-label">Verbatims</div>
+      <div class="verbatim">"Belo anúncio 🤣🤣" — comentário no Instagram da Axe Portugal, 12/08/2026</div>
+      <div class="verbatim">"oh pelos vistos tem coisas únicas em cima e em baixo: em cima tem um eclipse, em baixo tem desodorizante" — comentário no TikTok da Axe Portugal, 11/08/2026</div>
+      <div class="verbatim">"Mudo o outfit conforme o mood. O cheiro também acompanha 👀 Mais casual, mais arranjado ou aquele look que pede mesmo confiança… há um AXE para cada vibe." — influencer post Instagram, 12/08/2026</div>
+    </div>
+
+    <!-- VASELINE -->
+    <div class="brand-block">
+      <div class="brand-identity">
+        <div class="brand-logo-box vaseline-bg">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="8" width="26" height="16" rx="8" fill="#003087" opacity="0.15"/>
+            <text x="18" y="20" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="8" fill="#003087" font-weight="700" letter-spacing="0.3">Vaseline</text>
+          </svg>
+        </div>
+        <div class="brand-name-label">Vaseline</div>
+      </div>
+
+      <div class="topic-title">1. Vaseline regista 17 menções esta semana — conversação no Facebook centra-se em disponibilidade e satisfação com o produto</div>
+
+      <div class="subtopic">1.1 As perguntas sobre onde comprar revelam intenção de compra real e alcance nacional</div>
+      <p class="body-text">Na semana de 09 a 15/08, a Vaseline registou 17 menções rastreadas com sentimento predominantemente neutro/positivo. A conversação centrou-se sobretudo na <a href="http://www.facebook.com/1081692224199876_1469569241645749" target="_blank">página da marca no Facebook</a>, onde múltiplos utilizadores colocam questões sobre onde adquirir os produtos — "Onde como posso encomendar" — com respostas da comunidade e/ou da marca a indicar hipermercados como canal principal (Olga Dias hipermercado, Isabel Pera, Mariana Bexiga, Rosa Batista). Esta dinâmica de QA espontâneo confirma brand equity funcional e acesso democratizado, mas também sugere que a Vaseline pode beneficiar de maior visibilidade no ponto de venda.</p>
+
+      <div class="subtopic">1.2 Sentimento positivo espontâneo confirma satisfação consolidada com o produto</div>
+      <p class="body-text">Para além das questões de disponibilidade, registam-se comentários de satisfação espontâneos nas <a href="http://www.facebook.com/1081692224199876_925369637276783" target="_blank">publicações da marca no Facebook</a>: "É fantástico 😍", "É muito bom adoro", "Gosto.♥️" — expressões curtas mas genuínas que indicam uma base de consumidores satisfeitos e habituados ao produto. A ausência de conteúdo editorial nativo (no Instagram ou TikTok) desta semana representa uma oportunidade não aproveitada face ao contexto de verão, onde o cuidado da pele é tema dominante na categoria skincare.</p>
+
+      <div class="verbatim-label">Verbatims</div>
+      <div class="verbatim">"Onde como posso encomendar" / "Em qualquer hipermercado" — fio de comentários na página Facebook da Vaseline, 09-15/08/2026</div>
+      <div class="verbatim">"É fantástico 😍" e "É muito bom adoro" — comentários espontâneos de satisfação na página Facebook da Vaseline, 09-15/08/2026</div>
+      <div class="verbatim">"Como encomendar?" / "Em qualquer hipermercado" — padrão de QA comunitário na página Facebook da Vaseline, 09-15/08/2026</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ CAMPANHAS EM DESTAQUE ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div class="section-header-text">Produtos &amp; Campanhas em Destaque</div>
+    </div>
+
+    <!-- Sumário: 131 publicações (↓ vs. 204 anterior) | 74,81% positivas | 22,14% neutras | 3,05% negativas -->
+    <p class="body-text" style="margin-bottom:20px;">Total de <strong>131 publicações</strong> esta semana (↓ vs. 204 no período anterior). Sentimento global: <span style="color:var(--green);font-weight:600;">74,81% positivo</span>, <span style="color:var(--gray-500);font-weight:600;">22,14% neutro</span>, <span style="color:var(--red);font-weight:600;">3,05% negativo</span>.</p>
+
+    <div class="campaign-grid">
+
+      <div class="campaign-card">
+        <div class="campaign-card-header">
+          <div class="campaign-logo-sm axe-bg" style="border-radius:8px;">
+            <svg width="22" height="18" viewBox="0 0 36 36"><text x="18" y="22" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#1a1a2e" font-weight="800">AXE</text></svg>
+          </div>
+          <div class="campaign-name">AXE Lower Body Spray</div>
+        </div>
+        <div class="campaign-mentions">Menções: <strong>37</strong> <span style="font-size:11px;color:var(--gray-500);">(88,10% do total tagged)</span></div>
+        <div class="sentiment-bar">
+          <div class="sb-pos" style="width:54%"></div>
+          <div class="sb-neu" style="width:35%"></div>
+          <div class="sb-neg" style="width:11%"></div>
+        </div>
+        <div class="sentiment-labels">
+          <span class="sl-pos">😊 54%</span>
+          <span class="sl-neu">😐 35%</span>
+          <span class="sl-neg">😡 11%</span>
+        </div>
+      </div>
+
+      <div class="campaign-card">
+        <div class="campaign-card-header">
+          <div class="campaign-logo-sm dove-bg" style="border-radius:8px;">
+            <svg width="22" height="18" viewBox="0 0 36 36"><text x="18" y="22" text-anchor="middle" font-family="'DM Serif Display',serif" font-size="11" fill="#c5a236">Dove</text></svg>
+          </div>
+          <div class="campaign-name">Dove Confiante no Desporto</div>
+        </div>
+        <div class="campaign-mentions">Menções: <strong>4</strong> <span style="font-size:11px;color:var(--gray-500);">(9,52% do total tagged)</span></div>
+        <div class="sentiment-bar">
+          <div class="sb-pos" style="width:25%"></div>
+          <div class="sb-neu" style="width:75%"></div>
+        </div>
+        <div class="sentiment-labels">
+          <span class="sl-pos">😊 25%</span>
+          <span class="sl-neu">😐 75%</span>
+        </div>
+      </div>
+
+      <div class="campaign-card">
+        <div class="campaign-card-header">
+          <div class="campaign-logo-sm" style="border-radius:8px;background:var(--gray-100);">
+            <svg width="22" height="18" viewBox="0 0 36 36"><text x="18" y="22" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="8" fill="var(--gray-500)" font-weight="600">GERAL</text></svg>
+          </div>
+          <div class="campaign-name">Campanhas Geral</div>
+        </div>
+        <div class="campaign-mentions">Menções: <strong>1</strong> <span style="font-size:11px;color:var(--gray-500);">(2,38% do total tagged)</span></div>
+        <div class="sentiment-bar">
+          <div class="sb-pos" style="width:100%"></div>
+        </div>
+        <div class="sentiment-labels">
+          <span class="sl-pos">😊 100%</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════ SKINCARE — VISÃO GERAL ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div class="section-header-text">Skincare | Visão Geral do Mercado</div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi-box">
+        <div class="kpi-number">1.838</div>
+        <div class="kpi-label">Menções totais</div>
+      </div>
+      <div class="kpi-box green">
+        <div class="kpi-number">94%</div>
+        <div class="kpi-label">😊 Positivo</div>
+      </div>
+      <div class="kpi-box amber">
+        <div class="kpi-number">3%</div>
+        <div class="kpi-label">😐 Neutro</div>
+      </div>
+      <div class="kpi-box red">
+        <div class="kpi-number">3%</div>
+        <div class="kpi-label">😡 Negativo</div>
+      </div>
+    </div>
+
+    <div class="data-label">Distribuição por Redes</div>
+
+    <div class="network-item">
+      <div class="network-head">Instagram (predominante)</div>
+      <div class="network-desc">Toda a atividade rastreada esta semana provém de Instagram. Conteúdo de creators (unboxing, GRWM de férias, beauty hauls), com forte presença de rotinas de cuidado de pele de verão — produtos hidratantes, cremes corporais, sérum facial. Dove concentra a maior fatia das menções Unilever neste canal.</div>
+    </div>
+    <div class="network-item">
+      <div class="network-head">Facebook (CRM — Vaseline &amp; Rexona)</div>
+      <div class="network-desc">Conversação funcional nas páginas de marca: perguntas de disponibilidade do produto (Vaseline) e comentários breves de satisfação. Público com perfil diferente do Instagram — mais focado no ponto de venda e na utilidade prática.</div>
+    </div>
+    <div class="network-item">
+      <div class="network-head">TikTok (Axe Portugal)</div>
+      <div class="network-desc">Presença da Axe Portugal com um vídeo associado à campanha Lower Body Spray (11/08). As reações no TikTok são mais neutras do que no Instagram — comentários de follow-for-follow e menor criatividade orgânica, sugerindo que o conteúdo não foi totalmente optimizado para o formato da plataforma.</div>
+    </div>
+    <div class="network-item">
+      <div class="network-head">Impacto total de alcance</div>
+      <div class="network-desc">O total_impact registado no monitor Skincare Mercado PT para a semana é de <strong>9.616.827</strong> impressões — valor elevado impulsionado pelo peso dos posts de Instagram de creators com audiências alargadas. A concentração de posts num único canal (Instagram) limita a diversidade das fontes de dados para esta semana.</div>
+    </div>
+
+    <div class="data-label">⚠️ Nota sobre qualidade dos dados</div>
+    <p class="body-text" style="background:var(--gray-100);padding:12px 16px;border-radius:6px;border-left:3px solid var(--amber);">O monitor Skincare Mercado PT capturou nesta semana uma proporção elevada de conteúdo em português do Brasil (~85% dos posts amostrados contêm referências a R$, marcas BR-only, ou linguagem claramente brasileira). Os valores de volume (1.838) e sentimento (94% positivo) devem ser lidos com esta ressalva. Apenas ~15% dos posts são identificáveis como PT-PT ou ambíguos. Recomenda-se revisão dos filtros do monitor para restringir a PT-PT.</p>
+
+    <div class="data-label">Análise das Marcas — Unilever</div>
+    <p class="body-text"><strong>Dove:</strong> Lidera o volume com 91 menções na Visão Geral (earned media dominante — <a href="https://www.instagram.com/p/Db3m-y0sZSV/" target="_blank">Teatro Gil Vicente</a> + beauty creators de verão). <strong>Axe:</strong> 38 menções (campanha <a href="https://www.instagram.com/p/Db7x9nBsKz9/" target="_blank">Lower Body Spray</a> activa). <strong>Vaseline:</strong> 17 menções (conversação funcional no <a href="http://www.facebook.com/1081692224199876_1469569241645749" target="_blank">Facebook</a>). <strong>Rexona:</strong> Sem volume registado esta semana.</p>
+  </div>
+
+  <!-- ═══════════ SKINCARE — TEMAS ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div class="section-header-text">Skincare | Análise por Temas e Oportunidades</div>
+    </div>
+
+    <div class="territory-title">1. Verão 2026 — rotinas de férias e "Get Ready With Me" dominam o conteúdo de skincare</div>
+    <p class="body-text">O período 09-15/08/2026 coincide com a época alta de férias em Portugal. O conteúdo de skincare neste período é dominado por rotinas de verão partilhadas em Instagram — GRWM para férias, unboxings de caixas de beleza mensais e hauls de compras em cadeias europeias (Mueller, Primor, CareToBeauty). A Dove surge integrada nestas rotinas de forma natural, sem publicidade directa, como parte de uma selecção curada por creators.</p>
+
+    <div class="territory-title">2. Campanhas de desodorizante entram no território do skincare — Axe Lower Body Spray expande a categoria</div>
+    <p class="body-text">A campanha AXE Lower Body Spray representa uma expansão conceptual da categoria desodorizante para zonas corporais não tradicionais. Com 37 menções em Portugal e tom irreverente, a campanha normaliza a conversa sobre cuidado íntimo masculino — território que cruza desodorizante com skincare corporal. Esta extensão de categoria alinha-se com a tendência global de "body care" masculino em crescimento.</p>
+
+    <div class="territory-title">3. Creators como curadoras de marca — earned media supera owned media em volume e autenticidade</div>
+    <p class="body-text">A maior parte das menções Dove esta semana provém de conteúdo criado por creators sem relação directa com campanhas pagas — unboxings, GRWM e hauls onde a marca aparece como escolha pessoal. Este padrão de earned media autêntico tem maior credibilidade e ressonância do que o conteúdo paid. A Axe também beneficia de conteúdo de creator (post de lifestyle "Mudo o outfit conforme o mood") que eleva o tom da campanha Lower Body Spray.</p>
+
+    <div class="territory-title">4. Facebook como canal funcional — conversação de disponibilidade e preço revela oportunidade não endereçada digitalmente</div>
+    <p class="body-text">A conversação da Vaseline no Facebook esta semana é dominada por questões de disponibilidade — "onde comprar?", respostas com hipermercados. Este padrão revela uma base de consumidores fora dos centros urbanos e fora dos canais digitais tradicionais, que usa o Facebook como guia de compra. Oportunidade subexplorada: conteúdo de ponto de venda digital (maps, partilhas de localização, campanhas geo-targetted) para endereçar directamente esta procura latente.</p>
+  </div>
+
+  <!-- ═══════════ TERRITÓRIOS DE MARCA ═══════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-header-line"></div>
+      <div class="section-header-text">Territórios de Marca</div>
+    </div>
+
+    <!-- DOVE -->
+    <div class="territory-block">
+      <div class="territory-brand-header">
+        <div class="brand-logo-box dove-bg" style="width:36px;height:36px;border-radius:8px;">
+          <svg width="24" height="20" viewBox="0 0 36 36"><text x="18" y="22" text-anchor="middle" font-family="'DM Serif Display',serif" font-size="11" fill="#c5a236">Dove</text></svg>
+        </div>
+        <div class="territory-brand-name">Dove</div>
+      </div>
+
+      <div class="territory-title">"Whole Body" como Nova Fronteira — da Autoestima à Funcionalidade Quotidiana</div>
+
+      <div class="territory-sub">Contexto estratégico</div>
+      <p class="body-text">A nível global, a Dove lançou o Whole Body Deo como a sua maior extensão de categoria em mais de uma década — posicionando a marca além das axilas, para todo o corpo. A campanha internacional foca-se no claim "0% alumínio" e na normalização do cuidado corporal completo. Em Portugal, esta semana mostra os primeiros sinais orgânicos de adopção, com creators a integrar o produto em contextos de verão sem instrução directa da marca.</p>
+
+      <div class="territory-sub">Leitura cultural</div>
+      <p class="body-text">A Dove está a transitar do território exclusivo de "autoestima e real beauty" para um espaço complementar de funcionalidade premium no quotidiano. O público português está a descobrir o produto por via de earned media (unboxings, rotinas de férias), o que significa que a adopção está a ser liderada pela experimentação real, não pela campanha. Este padrão — produto que gera surpresa positiva ao ser experimentado — é dos mais valiosos em FMCG. O risco é que a comunicação de marca não acompanhe: se o público não sabe que existe um desodorizante "para todo o corpo", a descoberta depende apenas do acaso.</p>
+
+      <div class="source-links">
+        <a class="source-link" href="https://www.instagram.com/p/Db3m-y0sZSV/" target="_blank">instagram.com — Post Teatro Gil Vicente (earned media) — 10/08/2026</a>
+        <a class="source-link" href="https://www.instagram.com/p/Db3p-JQOEzu/" target="_blank">instagram.com — Unboxing Primor com Dove Whole Body Deo — 10/08/2026</a>
+      </div>
+
+      <div class="insight-box">
+        <div class="ib-label">Insights</div>
+        <p>→ A surpresa com o formato ("comprei a pensar que era só para axilas") indica awareness insuficiente da proposta de valor. A Dove precisa de uma campanha educativa PT-PT centrada em "onde e como usar" — formatos curtos de tutorial para Instagram/TikTok.</p>
+        <p>→ A integração natural do Dove em rotinas de creators (sem #pub) é um activo raro. Criar um programa de seeding a beauty creators portugueses de média dimensão (10K-50K seguidores) pode amplificar este padrão sem perder a autenticidade.</p>
+      </div>
+    </div>
+
+    <!-- REXONA -->
+    <div class="territory-block">
+      <div class="territory-brand-header">
+        <div class="brand-logo-box rexona-bg" style="width:36px;height:36px;border-radius:8px;">
+          <svg width="24" height="20" viewBox="0 0 36 36"><text x="18" y="22" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="8" fill="#1a5fb4" font-weight="700">REXONA</text></svg>
+        </div>
+        <div class="territory-brand-name">Rexona</div>
+      </div>
+
+      <div class="territory-title">Rexona no Mundial 2026 — "It Won't Let You Down" entre a Performance Física e o Território Emocional</div>
+
+      <div class="territory-sub">Contexto estratégico</div>
+      <p class="body-text">A Rexona é patrocinadora oficial da FIFA World Cup 2026 com a campanha global "It Won't Ever Let You Down", com Vinicius Jr. como embaixador. A marca posiciona "proteção" como metáfora de fiabilidade — não apenas funcional, mas emocional. A nível global, a campanha tem tração significativa, mas em Portugal a ativação local ainda não se reflecte nos dados de social listening desta semana. A fase de grupos decorre em junho-julho; agosto é intervalo entre fases — o que pode explicar a pausa.</p>
+
+      <div class="territory-sub">Leitura cultural</div>
+      <p class="body-text">O território de "proteção que nunca te abandona" é poderoso mas perigoso dentro do portfólio Unilever: a Dove compete no espaço de confiança emocional, e a Axe no de autoexpressão. Para a Rexona manter diferenciação, o foco deve permanecer na performance sob pressão física real — transpiração, calor, desgaste. O verão português (com vaga de calor recorrente) seria o contexto ideal para esta ancoragem, mas não foi activado esta semana.</p>
+
+      <div class="insight-box">
+        <div class="ib-label">Insights</div>
+        <p>→ A ausência de dados esta semana não é necessariamente negativa se a Rexona está em pausa estratégica entre fases do Mundial. No entanto, o verão de agosto é demasiado relevante para a categoria desodorizante para deixar passar sem ativação. Conteúdo oportunístico sobre calor, viagens e festivais de verão poderia manter a marca na conversa.</p>
+        <p>→ Risco de portfólio: se a Rexona escala para território emocional ("nunca te abandona"), sobrepõe-se à Dove. A diferenciação passa por manter o foco em "o teu corpo sob pressão real", não em "o teu estado emocional".</p>
+      </div>
+    </div>
+
+    <!-- AXE -->
+    <div class="territory-block">
+      <div class="territory-brand-header">
+        <div class="brand-logo-box axe-bg" style="width:36px;height:36px;border-radius:8px;">
+          <svg width="24" height="20" viewBox="0 0 36 36"><text x="18" y="22" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12" fill="#1a1a2e" font-weight="800">AXE</text></svg>
+        </div>
+        <div class="territory-brand-name">Axe</div>
+      </div>
+
+      <div class="territory-title">Da Sedução Clássica à Autoironia — a Axe reconstrói o masculino para a Gen Z</div>
+
+      <div class="territory-sub">Contexto estratégico</div>
+      <p class="body-text">A Axe atravessa uma reconfiguração global de posicionamento. A campanha "Find Your Magic" (2016) marcou o início da transição da sedução aspiracional para a autoexpressão. Em 2026, o "Lower Body Spray" e campanhas como "Smell Your Best When You Look Your Worst" (para o Mundial, com a LOLA Madrid) completam o arco: a atração masculina já não vem da performance, mas do à-vontade com o próprio corpo — incluindo as partes que a publicidade tradicional evitava. A campanha dos "adeptos-mascotes" no Mundial reforça este código: ridículo, sincero, confiante.</p>
+
+      <div class="territory-sub">Leitura cultural</div>
+      <p class="body-text">Para a Gen Z portuguesa, que consome simultaneamente TikTok PT e conteúdo global, o humor autodepreciativo da Axe é mais crível do que a promessa clássica de sedução. Os dados desta semana confirmam-no: o público co-cria com a marca (memes sobre o eclipse, jogos de palavras), em vez de apenas reagir. Este padrão de co-criação é o melhor indicador de relevância cultural. O risco é o inverso: se a Axe recua para tom aspiracional fora destas campanhas, contradiz o precedente que criou.</p>
+
+      <div class="source-links">
+        <a class="source-link" href="https://www.instagram.com/p/Db7x9nBsKz9/" target="_blank">instagram.com — Campanha Lower Body Spray (Portugal) — 12/08/2026</a>
+        <a class="source-link" href="https://www.instagram.com/p/Db8-NppMibO/" target="_blank">instagram.com — Influencer: "há um AXE para cada vibe" — 12/08/2026</a>
+      </div>
+
+      <div class="insight-box">
+        <div class="ib-label">Insights</div>
+        <p>→ O Lower Body Spray é mais do que uma extensão de produto — é um statement de marca. A Axe está a dizer "falamos de todo o corpo, sem tabus". Este código tem de ser consistente em toda a comunicação; retornar a sedução aspiracional seria incoerente.</p>
+        <p>→ O gap TikTok vs. Instagram é uma prioridade de execução. O público do TikTok exige conteúdo nativo (sounds, duets, transitions) — o mesmo vídeo publicado nas duas plataformas não funciona. Recomenda-se creators nativos de TikTok PT para a próxima vaga da campanha.</p>
+      </div>
+    </div>
+
+    <!-- VASELINE -->
+    <div class="territory-block">
+      <div class="territory-brand-header">
+        <div class="brand-logo-box vaseline-bg" style="width:36px;height:36px;border-radius:8px;">
+          <svg width="24" height="20" viewBox="0 0 36 36"><text x="18" y="22" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="8" fill="#003087" font-weight="700">Vaseline</text></svg>
+        </div>
+        <div class="territory-brand-name">Vaseline</div>
+      </div>
+
+      <div class="territory-title">Skin Trust — a Confiança Geracional como Activo Estratégico e o Risco de Inacção Digital</div>
+
+      <div class="territory-sub">Contexto estratégico</div>
+      <p class="body-text">A Vaseline é um caso raro no portfólio: uma marca cujo principal activo de marketing são os próprios consumidores. A recomendação boca-a-boca entre gerações (mães/avós para filhas) confere uma credibilidade que nenhuma campanha consegue replicar artificialmente. No entanto, esta marca "de família" tem um perfil digital quase exclusivamente funcional (Facebook, perguntas de disponibilidade), enquanto a conversa de skincare acontece cada vez mais em Instagram e TikTok — plataformas onde a Vaseline em Portugal está praticamente ausente.</p>
+
+      <div class="territory-sub">Leitura cultural</div>
+      <p class="body-text">O paradoxo da Vaseline é que a sua maior força (autenticidade geracional) pode tornar-se o seu maior risco (envelhecimento da base de consumidores). Os utilizadores que perguntam "onde comprar" no Facebook representam um segmento fiel mas que não amplifica — não faz Reels, não cria UGC, não influencia a Gen Z. O verão, com o contexto natural de hidratação e reparação da pele (lábios, calcanhares, pós-praia), é a janela ideal para activar a Vaseline em canais mais jovens sem perder a autenticidade funcional que a define.</p>
+
+      <div class="source-links">
+        <a class="source-link" href="http://www.facebook.com/1081692224199876_1469569241645749" target="_blank">facebook.com — Perguntas de disponibilidade na página Vaseline — 09-15/08/2026</a>
+        <a class="source-link" href="http://www.facebook.com/1081692224199876_925369637276783" target="_blank">facebook.com — Comentários de satisfação espontâneos — 09-15/08/2026</a>
+      </div>
+
+      <div class="insight-box">
+        <div class="ib-label">Insights</div>
+        <p>→ Território proposto: <strong>Skin Trust / Confiança Essencial</strong> — a Vaseline pode ocupar o espaço de "a marca que a tua mãe já usava e que realmente funciona". Conteúdo "how I use it" com consumidores reais (não influencers) em formatos curtos de Instagram/TikTok ampliaria a base sem trair o ADN.</p>
+        <p>→ A procura funcional no Facebook (onde comprar, como encomendar) sugere que a marca pode activar campanhas de performance digital com baixo investimento — anúncios geolocalizados em hipermercado, links directos a e-commerce. Converter intenção de compra que já existe é o caminho mais eficiente.</p>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <div class="footer">
+    <div class="footer-logo"><span class="fl-e">elife</span><span class="fl-g">group</span></div>
+    <div class="footer-copy">Copyright © Elife Todos os direitos reservados</div>
+  </div>
+
+</div>
+
+</body>
+</html>
